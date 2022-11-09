@@ -11,4 +11,4 @@ export default <Config>{
     extend: {},
   },
   plugins: [],
-}
+};

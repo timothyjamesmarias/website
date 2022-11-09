@@ -9,7 +9,6 @@
     "lint": "eslint --ext .ts,.js,.vue ."
   },
   "devDependencies": {
-    "@intlify/nuxt3": "^0.2.4",
     "@nuxtjs/tailwindcss": "^6.1.2",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",

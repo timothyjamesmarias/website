@@ -5,19 +5,12 @@ export default defineNuxtConfig({
   vite: {
     plugins: [eslintPlugin()],
   },
-  modules: ["@nuxtjs/tailwindcss", "@intlify/nuxt3"],
+  modules: ["@nuxtjs/tailwindcss"],
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
     configPath: "tailwind.config",
     exposeConfig: false,
     injectPosition: 0,
     viewer: true,
-  },
-  intlify: {
-    localeDir: "lang",
-    vueI18n: {
-      locale: "en",
-      fallbackLocale: "en",
-    },
   },
 });
