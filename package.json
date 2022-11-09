@@ -9,6 +9,8 @@
     "lint": "eslint --ext .ts,.js,.vue ."
   },
   "devDependencies": {
+    "@nuxt/content": "^2.2.1",
+    "@nuxtjs/google-fonts": "^2.0.0",
     "@nuxtjs/tailwindcss": "^6.1.2",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",

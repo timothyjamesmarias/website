@@ -5,7 +5,14 @@ export default defineNuxtConfig({
   vite: {
     plugins: [eslintPlugin()],
   },
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
+  buildModules: ["@nuxtjs/google-fonts"],
+  googleFonts: {
+    families: {
+      "Open Sans": true,
+      Raleway: true,
+    },
+  },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
     configPath: "tailwind.config",
@@ -13,4 +20,5 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: true,
   },
+  content: {},
 });
