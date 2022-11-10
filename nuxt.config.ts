@@ -9,9 +9,9 @@ export default defineNuxtConfig({
   buildModules: ["@nuxtjs/google-fonts"],
   googleFonts: {
     families: {
-      "Open Sans": true,
-      Raleway: true,
+      Roboto: [200],
     },
+    display: "swap",
   },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
@@ -20,5 +20,4 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: true,
   },
-  content: {},
 });
