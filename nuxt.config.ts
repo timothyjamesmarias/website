@@ -9,9 +9,12 @@ export default defineNuxtConfig({
   buildModules: ["@nuxtjs/google-fonts"],
   googleFonts: {
     families: {
-      Roboto: [200],
+      Raleway: {
+        wght: [200, 400],
+      },
     },
     display: "swap",
+    download: false,
   },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",

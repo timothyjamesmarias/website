@@ -15,4 +15,9 @@
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+ul {
+  font-family: Raleway;
+  font-weight: 200;
+}
+</style>

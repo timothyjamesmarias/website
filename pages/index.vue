@@ -1,4 +1,4 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <ContentDoc />
+  <div>fart</div>
 </template>
