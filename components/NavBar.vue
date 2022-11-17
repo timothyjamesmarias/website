@@ -1,23 +1,28 @@
-<script setup></script>
-
 <template>
-  <nav>
-    <ul class="flex p-4 justify-center">
-      <li>
-        <NuxtLink to="/" class="text-3xl px-2 text-zinc-50">Home</NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/posts" class="text-3xl px-2 text-zinc-50"
-          >Posts</NuxtLink
-        >
-      </li>
+<nav class="flex py-4 sticky">
+    <ul class="flex justify-center">
+        <li>
+            <NuxtLink to="/" class="text-5xl pr-4 text-white hover:text-blue">
+            Home
+            </NuxtLink>
+        </li>
+        <li>
+            <NuxtLink to="/projects" class="text-5xl pr-4 text-white hover:text-blue">
+            Projects
+            </NuxtLink>
+        </li>
+        <li>
+            <NuxtLink to="/posts" class="text-5xl pr-4 text-white hover:text-blue">
+            Posts
+            </NuxtLink>
+        </li>
     </ul>
-  </nav>
+    <hr>
+</nav>
 </template>
 
 <style scoped>
 ul {
-  font-family: Raleway;
-  font-weight: 200;
+    font-family: Teko;
 }
 </style>

@@ -1,16 +1,18 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <NavBar />
-  <slot />
+    <div class="xl:mx-40 md:mx-10 sm:mx-10 xs:mx-10">
+        <NavBar />
+        <slot />
+    </div>
 </template>
 
 <style global>
 html,
 body {
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 body {
-  margin-inline: 1rem;
-  background-color: rgb(24 24 27);
+    background-color: #16171E;
 }
 </style>

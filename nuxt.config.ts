@@ -1,20 +1,25 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
-import eslintPlugin from "vite-plugin-eslint";
 
 export default defineNuxtConfig({
   vite: {
-    plugins: [eslintPlugin()],
+    plugins: [],
   },
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
-  buildModules: ["@nuxtjs/google-fonts"],
+  buildModules: ["@nuxtjs/google-fonts", "@nuxtjs/fontawesome"],
   googleFonts: {
     families: {
-      Raleway: {
-        wght: [200, 400],
-      },
+        Teko: [300],
     },
     display: "swap",
-    download: false,
+    download: true,
+    base64: true,
+    inject: true,
+    overwrite: false,
+    stylePath: 'assets/css/fonts.css',
+    prefetch: false,
+    preconnect: true,
+    preload: false,
+    useStyleSheet: false,
   },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
@@ -23,4 +28,10 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: true,
   },
+  fontawesome: {
+    icons: [
+        "faGithub",
+        "faMagnifyingGlass",
+    ],
+  }
 });

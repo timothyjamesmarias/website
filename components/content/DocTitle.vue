@@ -1,10 +1,9 @@
 <template>
-  <h1 class="text-xl py-4 text-center text-zinc-50"><slot /></h1>
+    <h1 class="text-5xl text-red py-4"><slot /></h1>
 </template>
 
 <style scoped>
 h1 {
-  font-family: "Railway";
-  font-weight: 200;
+    font-family: Teko;
 }
 </style>

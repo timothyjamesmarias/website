@@ -1,3 +1,0 @@
-::DocTitle
-My Blog
-::

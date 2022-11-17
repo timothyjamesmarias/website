@@ -1,10 +1,9 @@
 <template>
-  <p class="text-md leading-normal text-zinc-50"><slot /></p>
+  <p class="text-md text-main leading-normal"><slot /></p>
 </template>
 
 <style scoped>
 p {
-  font-family: "Source Sans Pro";
-  font-weight: 200;
+    font-family: Ubuntu;
 }
 </style>
