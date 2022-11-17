@@ -1,28 +1,36 @@
 <template>
 <nav class="flex py-4 sticky">
+    <div>
+        <NuxtLink to="/" class="text-5xl text-white hover:text-blue font-prompt">
+        Timothy Marias
+        </NuxtLink>
+    </div>
     <ul class="flex justify-center">
         <li>
-            <NuxtLink to="/" class="text-5xl pr-4 text-white hover:text-blue">
+            <NuxtLink to="/" class="text-5xl pr-4 text-white hover:text-blue font-prompt">
             Home
             </NuxtLink>
         </li>
         <li>
-            <NuxtLink to="/projects" class="text-5xl pr-4 text-white hover:text-blue">
+            <NuxtLink to="/projects" class="text-5xl pr-4 text-white hover:text-blue font-prompt">
             Projects
             </NuxtLink>
         </li>
         <li>
-            <NuxtLink to="/posts" class="text-5xl pr-4 text-white hover:text-blue">
+            <NuxtLink to="/posts" class="text-5xl pr-4 text-white hover:text-blue font-prompt">
             Posts
             </NuxtLink>
         </li>
     </ul>
-    <hr>
+    <div>
+        <a href="#">
+            <font-awesome-icon :icon="['fab', 'github']" class="text-white hover:text-blue" />
+        </a>
+    </div>
 </nav>
 </template>
 
 <style scoped>
-ul {
-    font-family: Teko;
+nav {
 }
 </style>

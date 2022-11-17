@@ -19,6 +19,10 @@ export default <Config>{
         "blue": "#9BB8DC",
         "magenta": "#BAACE2",
         "cyan": "#00C5C7",
+      },
+      fontFamily: {
+          "ubuntu":["Ubuntu"],
+          "prompt":["Prompt"],
       }
   },
   plugins: [],

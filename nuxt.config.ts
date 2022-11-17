@@ -4,11 +4,12 @@ export default defineNuxtConfig({
   vite: {
     plugins: [],
   },
+  plugins: ['~/plugins/fontawesome.js'],
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
-  buildModules: ["@nuxtjs/google-fonts", "@nuxtjs/fontawesome"],
+  buildModules: ["@nuxtjs/google-fonts"],
   googleFonts: {
     families: {
-        Teko: [300],
+        Prompt: [300],
     },
     display: "swap",
     download: true,
@@ -29,9 +30,11 @@ export default defineNuxtConfig({
     viewer: true,
   },
   fontawesome: {
-    icons: [
-        "faGithub",
-        "faMagnifyingGlass",
-    ],
+    component: "Fa",
+    suffix: false,
+    icons: {
+        solid: true,
+        brands: true,
+    },
   }
 });
