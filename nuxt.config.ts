@@ -5,11 +5,12 @@ export default defineNuxtConfig({
     plugins: [],
   },
   plugins: ['~/plugins/fontawesome.js'],
+  css: ['@fortawesome/fontawesome-svg-core/styles.css'],
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
   buildModules: ["@nuxtjs/google-fonts"],
   googleFonts: {
     families: {
-        Prompt: [300],
+        Prompt: [400],
     },
     display: "swap",
     download: true,
@@ -29,12 +30,4 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: true,
   },
-  fontawesome: {
-    component: "Fa",
-    suffix: false,
-    icons: {
-        solid: true,
-        brands: true,
-    },
-  }
 });

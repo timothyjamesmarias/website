@@ -1,30 +1,25 @@
 <template>
-<nav class="flex py-4 sticky">
+<nav class="flex justify-between p-4 xs:p-0 sticky">
     <div>
-        <NuxtLink to="/" class="text-5xl text-white hover:text-blue font-prompt">
+        <NavItem :href="'/'">
         Timothy Marias
-        </NuxtLink>
+        </NavItem>
     </div>
-    <ul class="flex justify-center">
+    <ul class="flex">
         <li>
-            <NuxtLink to="/" class="text-5xl pr-4 text-white hover:text-blue font-prompt">
-            Home
-            </NuxtLink>
-        </li>
-        <li>
-            <NuxtLink to="/projects" class="text-5xl pr-4 text-white hover:text-blue font-prompt">
+            <NavItem :href="'/projects'">
             Projects
-            </NuxtLink>
+            </NavItem>
         </li>
-        <li>
-            <NuxtLink to="/posts" class="text-5xl pr-4 text-white hover:text-blue font-prompt">
+        <li class="pl-6">
+            <NavItem :href="'/posts'">
             Posts
-            </NuxtLink>
+            </NavItem>
         </li>
     </ul>
     <div>
-        <a href="#">
-            <font-awesome-icon :icon="['fab', 'github']" class="text-white hover:text-blue" />
+        <a href="https://github.com/timothyjamesmarias" class="text-xl text-white hover:text-blue">
+            <font-awesome-icon :icon="['fab', 'github']" />
         </a>
     </div>
 </nav>

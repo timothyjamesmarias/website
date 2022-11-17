@@ -1,0 +1,39 @@
+<template>
+<nav class="flex justify-around py-4 sticky">
+    <div>
+        <NuxtLink to="/" class="text-5xl text-white hover:text-blue font-prompt">
+        Timothy Marias
+        </NuxtLink>
+    </div>
+    <ul class="flex justify-center">
+        <li>
+            <NuxtLink to="/" class="text-5xl pr-4 text-white hover:text-blue
+            font-prompt">
+            Home
+            </NuxtLink>
+        </li>
+        <li>
+            <NuxtLink to="/projects" class="text-5xl pr-4 text-white 
+            hover:text-blue font-prompt">
+            Projects
+            </NuxtLink>
+        </li>
+        <li>
+            <NuxtLink to="/posts" class="text-5xl pr-4 text-white hover:text-blue
+            font-prompt">
+            Posts
+            </NuxtLink>
+        </li>
+    </ul>
+    <div>
+        <a href="#" class="text-4xl text-white hover:text-blue">
+            <font-awesome-icon :icon="['fab', 'github']" />
+        </a>
+    </div>
+</nav>
+</template>
+
+<style scoped>
+nav {
+}
+</style>
