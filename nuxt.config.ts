@@ -23,6 +23,12 @@ export default defineNuxtConfig({
     preload: false,
     useStyleSheet: false,
   },
+  colorMode: {
+  },
+  content: {
+      highlight: {
+      }
+  },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
     configPath: "tailwind.config",

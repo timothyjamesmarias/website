@@ -6,6 +6,10 @@
 </template>
 
 <style global>
+*::selection {
+    background: #9bb8dc; 
+}
+
 html,
 body {
   height: 100vh;
