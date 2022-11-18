@@ -1,9 +1,6 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 
 export default defineNuxtConfig({
-  vite: {
-    plugins: [],
-  },
   plugins: ['~/plugins/fontawesome.js'],
   css: ['@fortawesome/fontawesome-svg-core/styles.css'],
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
@@ -23,11 +20,14 @@ export default defineNuxtConfig({
     preload: false,
     useStyleSheet: false,
   },
-  colorMode: {
-  },
   content: {
       highlight: {
-      }
+          theme: "nord",
+            preload: [
+                "c", "python", "javascript", "typescript", "rust", "php", 
+                "ruby", "vue", "html", "css"
+            ],
+      },
   },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
