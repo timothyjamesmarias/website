@@ -21,5 +21,11 @@
   },
   "dependencies": {
     "@fortawesome/vue-fontawesome": "^3.0.2"
-  }
+  },
+  "name": "website",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:timothyjamesmarias/blog-front-end.git",
+  "author": "timothyjamesmarias <timothyjamesmarias@gmail.com>",
+  "license": "MIT"
 }
