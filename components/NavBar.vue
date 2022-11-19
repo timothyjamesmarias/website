@@ -1,5 +1,5 @@
 <template>
-<nav class="flex justify-between align-center p-4 xs:p-0 sticky select-none">
+<nav class="flex justify-between align-center p-4 xs:px-0 xs:py-2 sticky top-0 select-none bg-background">
     <div>
         <NavItem :href="'/'">
         Home
@@ -8,10 +8,10 @@
         Projects
         </NavItem>
         <NavItem :href="'/posts'">
-        Posts
+        Blog
         </NavItem>
     </div>
-        <a href="https://github.com/timothyjamesmarias" class="text-xl text-white hover:text-blue">
+        <a href="https://github.com/timothyjamesmarias" class="text-2xl text-white hover:text-blue">
             <font-awesome-icon :icon="['fab', 'github']" />
         </a>
 </nav>
