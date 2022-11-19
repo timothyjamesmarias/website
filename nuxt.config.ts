@@ -1,6 +1,15 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 
 export default defineNuxtConfig({
+    app: {
+        head: {
+            title: "Timothy Marias",
+            meta: [{
+                name: "description",
+                content: "Web dev"
+            }],
+        },
+    },
   plugins: ['~/plugins/fontawesome.js'],
   css: ['@fortawesome/fontawesome-svg-core/styles.css'],
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
