@@ -6,7 +6,7 @@
     Posts
     </ProseH1>
     <ContentList path="/posts" v-slot="{ list }">
-      <div v-for="article in list" :key="article._path" >
+      <div v-for="article in list.reverse()" :key="article._path" >
         <div class="py-3">
             <NuxtLink :to="article._path">
                <InfoContainer>
