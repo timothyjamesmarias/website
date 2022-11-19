@@ -9,10 +9,10 @@
       <div v-for="article in list" :key="article._path" >
         <div class="py-3">
             <NuxtLink :to="article._path">
-               <div class="group text-white font-ubuntu border border-magenta rounded-lg hover:border-yellow">
+               <InfoContainer>
                   <h2 class="text-3xl group-hover:text-blue py-1 px-2">{{ article.title }}</h2> 
                   <p class="py-1 px-2">{{ article.description }}</p>
-               </div> 
+               </InfoContainer>
             </NuxtLink>
         </div> 
       </div>

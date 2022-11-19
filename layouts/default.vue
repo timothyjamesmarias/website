@@ -1,7 +1,7 @@
 <template>
     <PageHeader />
     <NavBar />
-    <div class="xl:mx-40 md:mx-10 sm:mx-10 xs:mx-10">
+    <div class="xl:lg:md:sm:mx-20 xs:mx-10 ">
         <slot />
     </div>
     <br />
