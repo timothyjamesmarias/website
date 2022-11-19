@@ -1,13 +1,23 @@
-<script setup></script>
-
 <template>
-  <nav>
-    <ul class="flex p-4 justify-center">
-      <li><NuxtLink to="/" class="text-3xl px-2">Home</NuxtLink></li>
-      <li><NuxtLink to="/" class="text-3xl px-2">Posts</NuxtLink></li>
-      <li><NuxtLink to="/" class="text-3xl px-2">About</NuxtLink></li>
-    </ul>
-  </nav>
+<nav class="flex justify-between align-center p-4 xs:px-0 xs:py-2 sticky top-0 select-none bg-background">
+    <div>
+        <NavItem :href="'/'">
+        Home
+        </NavItem>
+        <NavItem :href="'/projects'">
+        Projects
+        </NavItem>
+        <NavItem :href="'/posts'">
+        Blog
+        </NavItem>
+    </div>
+        <a href="https://github.com/timothyjamesmarias" class="text-2xl text-white hover:text-blue">
+            <font-awesome-icon :icon="['fab', 'github']" />
+        </a>
+</nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+nav {
+}
+</style>
