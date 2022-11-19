@@ -2,15 +2,17 @@
 
 </script>
 <template>
+    <ProseH1>
+    Posts
+    </ProseH1>
     <ContentList path="/posts" v-slot="{ list }">
-      <div v-for="article in list" :key="article._path" >
+      <div v-for="article in list.reverse()" :key="article._path" >
         <div class="py-3">
             <NuxtLink :to="article._path">
-               <div class="text-white font-ubuntu ">
-                  <h2 class="text-xl hover:text-blue">{{ article.title }}</h2> 
-                  <p>{{ article.description }}</p>
-                  <ContentLine />
-               </div> 
+               <InfoContainer>
+                  <h2 class="text-3xl group-hover:text-blue py-1 px-2">{{ article.title }}</h2> 
+                  <p class="py-1 px-2">{{ article.description }}</p>
+               </InfoContainer>
             </NuxtLink>
         </div> 
       </div>
