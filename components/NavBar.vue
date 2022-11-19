@@ -1,5 +1,5 @@
 <template>
-<nav class="flex justify-between p-4 xs:p-0 sticky select-none">
+<nav class="flex justify-between align-center p-4 xs:p-0 sticky select-none">
     <div>
         <NavItem :href="'/'">
         Home

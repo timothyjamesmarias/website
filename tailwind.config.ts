@@ -10,8 +10,8 @@ export default <Config>{
   theme: {
       colors: {
         "background": "#16171E",
-        "main": "#FEFFFF",
-        "white": "#c7c7c7",
+        "white": "#FEFFFF",
+        "main": "#c7c7c7",
         "black": "#000000",
         "red": "#E68E8E",
         "green": "#83AC8E",
