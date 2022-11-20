@@ -1,7 +1,5 @@
-<script setup lang="ts">
-
-</script>
 <template>
+<div>
     <ProseH1>
     Posts
     </ProseH1>
@@ -17,4 +15,5 @@
         </div> 
       </div>
     </ContentList>
+</div>
 </template>

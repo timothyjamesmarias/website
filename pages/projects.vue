@@ -1,4 +1,5 @@
 <template>
+<div>
     <ProseH1>
         My Projects
     </ProseH1>
@@ -10,4 +11,5 @@
         href="https://regeneshare.com"
         />
     </div>
+</div>
 </template>

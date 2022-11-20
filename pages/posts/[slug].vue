@@ -1,4 +1,6 @@
 <template>
-  <ContentDoc />
-  <ContentLine />
+<div>
+    <ContentDoc />
+    <ContentLine />
+</div>
 </template>
