@@ -1,4 +1,5 @@
 <template>
+<div>
         <GreetingsText class="pt-10">
         Hey, my name's Tim and I'm a full stack web dev. 
         I like building things on the internet.
@@ -28,4 +29,5 @@
             </InfoContainer>
             </NuxtLink>
         </div>
+</div>
 </template>

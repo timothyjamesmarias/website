@@ -16,8 +16,3 @@
         </a>
 </nav>
 </template>
-
-<style scoped>
-nav {
-}
-</style>
