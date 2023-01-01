@@ -8,6 +8,7 @@ export default <Config>{
     "./components/**/*.{html,js}",
   ],
   theme: {
+    extend: {
       colors: {
         "background": "#16171E",
         "white": "#FEFFFF",
@@ -24,6 +25,7 @@ export default <Config>{
           "ubuntu":["Ubuntu"],
           "prompt":["Prompt"],
       }
+    },
   },
   plugins: [],
 };

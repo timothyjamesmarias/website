@@ -1,10 +1,8 @@
 <template>
-    <PageHeader />
     <NavBar />
-    <div class="xl:lg:md:sm:mx-20 xs:mx-10 ">
+    <main class="p-4">
         <slot />
-    </div>
-    <br />
+    </main>
 </template>
 
 <style global>

@@ -1,11 +1,8 @@
 <template>
-<nav class="flex justify-between align-center p-4 xs:px-0 xs:py-2 sticky top-0 select-none bg-background">
+<nav class="flex justify-between align-center p-4 sticky top-0 select-none bg-background">
     <div>
         <NavItem :href="'/'">
         Home
-        </NavItem>
-        <NavItem :href="'/projects'">
-        Projects
         </NavItem>
         <NavItem :href="'/posts'">
         Blog
