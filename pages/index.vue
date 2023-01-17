@@ -35,8 +35,7 @@ const projectInfo = {
   <GreetingsText>
   Hey, my name's Tim and I'm a full stack web dev in love with Laravel and Vue.
   </GreetingsText>
-  <ProseH1 id="projects">
-  My Projects
-  </ProseH1>
+
+
 </div>
 </template>

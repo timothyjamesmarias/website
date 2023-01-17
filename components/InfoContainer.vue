@@ -1,5 +1,5 @@
 <template>
-    <div class="group text-white font-ubuntu border border-magenta rounded-lg hover:border-yellow">
+    <section class="bg-secondary">
         <slot />
-    </div>
+    </section>
 </template>
