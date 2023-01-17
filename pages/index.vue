@@ -31,11 +31,9 @@ const projectInfo = {
 };
 </script>
 <template>
-<div>
-  <GreetingsText>
-  Hey, my name's Tim and I'm a full stack web dev in love with Laravel and Vue.
-  </GreetingsText>
-
-
+<div class="snap-y snap-mandatory">
+  <PageSection v-for="(project, key) in projectInfo" :key="key" :background="key % 2 === 0 ? 'bg-secondary' : 'bg-background'">
+    <ProjectContainer :src="project.src" :name="project.name" :description="project.description" :href="project.href" :list="project.list" :github="project.github" />
+  </PageSection>
 </div>
 </template>

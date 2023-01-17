@@ -4,13 +4,16 @@ import "@fontsource/iosevka"
 <template>
   <div class="min-h-screen bg-background font-main text-main selection:bg-highlight">
     <NavBar />
-    <main class="mx-4 sm:mx-10 md:mx20 lg:mx-44">
+    <main class="">
       <slot />
     </main>
   </div>
 </template>
 
 <style global>
+html {
+  scroll-behavior: smooth;
+}
 html::-webkit-scrollbar {
     display: none;
 }
