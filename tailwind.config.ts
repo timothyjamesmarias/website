@@ -11,9 +11,9 @@ export default <Config>{
     extend: {
       colors: {
         "background": "#282a36",
-        "highlight": "#44475a",
+        "secondary": "#44475a",
         "main": "#f8f8f2",
-        "secondary": "#6272a4",
+        "highlight": "#6272a4",
         "cyan": "#8be9fd",
         "green": "#50fa7b",
         "orange": "#ffb86c",
