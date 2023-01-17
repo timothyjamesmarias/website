@@ -4,8 +4,8 @@ import "@fontsource/iosevka"
 <template>
   <div class="min-h-screen bg-background font-main text-main selection:bg-highlight">
     <NavBar />
-    <main class="">
-        <slot />
+    <main class="mx-4 sm:mx-10 md:mx20 lg:mx-44">
+      <slot />
     </main>
   </div>
 </template>

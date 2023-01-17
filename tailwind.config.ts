@@ -4,8 +4,8 @@ export default <Config>{
   content: [
     // Add all files that contain Tailwind classes
     // e.g. './modules/**/*.{vue,js,ts}',
-    "./pages/**/*.{html,js}",
-    "./components/**/*.{html,js}",
+    "./pages/**/*.{html,js, vue}",
+    "./components/**/*.{html,js, vue}",
   ],
   theme: {
     extend: {

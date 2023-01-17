@@ -1,5 +1,5 @@
 <template>
-<nav class="flex justify-between align-center p-4 sticky top-0 select-none">
+<nav class="flex justify-between align-center sticky top-0 select-none p-4 bg-background drop-shadow-lg">
     <NavItem :href="'/'">
         Timothy Marias
     </NavItem>
