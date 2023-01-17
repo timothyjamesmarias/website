@@ -32,7 +32,9 @@ const projectInfo = {
 </script>
 <template>
 <div class="snap-y snap-mandatory">
-  <PageSection v-for="(project, key) in projectInfo" :key="key" :background="key % 2 === 0 ? 'bg-secondary' : 'bg-background'">
+  <PageSection background="bg-background">
+  </PageSection>
+  <PageSection v-for="(project, key, index) in projectInfo" :key="key" :background="index % 2 === 0 ? 'bg-secondary' : 'bg-background'">
     <ProjectContainer :src="project.src" :name="project.name" :description="project.description" :href="project.href" :list="project.list" :github="project.github" />
   </PageSection>
 </div>

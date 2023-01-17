@@ -5,5 +5,6 @@ const props = defineProps<{
 </script>
 <template>
     <section :class="background" class="h-screen">
+        <slot />
     </section>
 </template>
