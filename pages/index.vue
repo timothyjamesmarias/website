@@ -28,28 +28,15 @@ const projectInfo = {
     ],
     github: "https://github.com/rallytoflag/rallytoflag",
   },
-  MariusArmory: {
-    src: "/img/mariusarmory.png",
-    name: "Marius Armory",
-    description: "Landing page for Marius Armory",
-    href: "https://mariusarmory.com",
-    list: [
-      "Nuxt",
-    ],
-    github: "https://github.com/MariusArmory/landing-page-front-end",
-  },
 };
 </script>
 <template>
 <div>
   <GreetingsText>
-  Hey, my name's Tim and I'm a full stack web dev obsessed with Laravel and Vue.
+  Hey, my name's Tim and I'm a full stack web dev in love with Laravel and Vue.
   </GreetingsText>
   <ProseH1 id="projects">
   My Projects
   </ProseH1>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <ProjectCell v-for="project in projectInfo" :src="project.src" :name="project.name" :description="project.description" :href="project.href" :list="project.list" />
-  </div>
 </div>
 </template>

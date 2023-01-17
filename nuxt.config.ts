@@ -16,7 +16,6 @@ export default defineNuxtConfig({
   buildModules: ["@nuxtjs/google-fonts"],
   googleFonts: {
     families: {
-        Prompt: [400],
     },
     display: "swap",
     download: true,
@@ -31,7 +30,7 @@ export default defineNuxtConfig({
   },
   content: {
       highlight: {
-          theme: "nord",
+          theme: "dracula",
             preload: [
                 "c", "python", "javascript", "typescript", "rust", "php", 
                 "ruby", "vue", "html", "css"
