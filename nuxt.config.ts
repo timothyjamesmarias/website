@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     },
   plugins: ['~/plugins/fontawesome.js'],
   css: ['@fortawesome/fontawesome-svg-core/styles.css'],
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
+  modules: ["@nuxtjs/tailwindcss"],
   buildModules: ["@nuxtjs/google-fonts"],
   googleFonts: {
     families: {
@@ -27,15 +27,6 @@ export default defineNuxtConfig({
     preconnect: true,
     preload: false,
     useStyleSheet: false,
-  },
-  content: {
-      highlight: {
-          theme: "dracula",
-            preload: [
-                "c", "python", "javascript", "typescript", "rust", "php", 
-                "ruby", "vue", "html", "css"
-            ],
-      },
   },
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",

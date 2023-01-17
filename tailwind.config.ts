@@ -23,6 +23,7 @@ export default <Config>{
         "yellow": "#f1fa8c",
       },
       fontFamily: {
+        "main": ["Iosevka", "monospace"],
       }
     },
   },
