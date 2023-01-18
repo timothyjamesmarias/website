@@ -1,5 +1,5 @@
 <template>
-    <p class="text-main">
+    <p class="text-3xl whitespace-wrap break-words">
         <slot />
     </p>
 </template>

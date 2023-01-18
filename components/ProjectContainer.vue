@@ -16,13 +16,15 @@ const props = defineProps<{
             <img :src="src" class="w-full h-full object-cover rounded-lg" />
         </NuxtLink>
         <div>
-            <h2 class="text-2xl font-bold" :class="listcolor % 2 === 0 ? 'text-orange' : 'text-green'">{{ name }}</h2>
+            <h2 class="text-2xl font-bold" :class="listcolor % 2 === 0 ? 'text-green' : 'text-pink'">{{ name }}</h2>
             <p class="text-lg">{{ description }}<BodyLink v-if="businesslink" :href="businesslink" :color="listcolor">{{ name }}</BodyLink></p>
             <List>
                 <ListItem v-for="item in list" :key="item" :color="listcolor">{{ item }}</ListItem>
             </List>
+            <div class="flex mt-5">
             <BodyLink :href="href" :color="listcolor">Visit Site</BodyLink>
-            <BodyLink v-if="github" :href="github" :color="listcolor">View on Github</BodyLink>
+            <BodyLink v-if="github" :href="github" :color="listcolor" class="ml-6">View on Github</BodyLink>
+            </div>
         </div>
     </div>
 </template>

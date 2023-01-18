@@ -2,7 +2,7 @@
 import "@fontsource/iosevka"
 </script>
 <template>
-  <div class="min-h-screen bg-background font-main text-main selection:bg-highlight">
+  <div class="min-h-screen bg-background font-main text-main text-lg selection:bg-highlight">
     <NavBar />
     <main class="">
       <slot />

@@ -49,7 +49,14 @@ const projectInfo = {
 </script>
 <template>
 <div class="snap-y snap-mandatory">
-  <PageSection background="bg-background">
+  <PageSection background="bg-background" class="mx-4 sm:mx-44">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-0 items-center content-center">
+      <img src="/img/timothy-marias.jpg" alt="Hero" class="w-64 h-64 sm:w-96 sm:h-96 object-cover rounded-full" />
+      <GreetingsText>
+        Hi, my name's Tim and I'm a full-stack web developer in love with Laravel and Vue. 
+        Check out my <BodyLink :href="'https://github.com/timothyjamesmarias'">Github</BodyLink> or my projects below!
+      </GreetingsText>
+    </div>
   </PageSection>
   <PageSection v-for="(project, key, index) in projectInfo" :key="key" :id="key" :background="index % 2 === 0 ? 'bg-secondary' : 'bg-background'">
     <ProjectContainer :src="project.src" :listcolor="index" :name="project.name" :businesslink="project.businesslink" :description="project.description" :href="project.href" :list="project.list" :github="project.github" />

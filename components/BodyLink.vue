@@ -5,7 +5,7 @@ const props = defineProps<{
 }>();
 </script>
 <template>
-    <NuxtLink :to="href" :class="color % 2 === 0 ?  'text-orange' : 'text-green'" class="hover:underline">
+    <NuxtLink :to="href" :class="color % 2 === 0 ?  'text-green' : 'text-pink'" class="hover:underline">
         <slot />
     </NuxtLink>
 </template>
