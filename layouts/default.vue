@@ -11,10 +11,13 @@ import "@fontsource/iosevka"
 </template>
 
 <style global>
-html {
+html{
   scroll-behavior: smooth;
 }
 html::-webkit-scrollbar {
+    display: none;
+}
+main::-webkit-scrollbar {
     display: none;
 }
 </style>
