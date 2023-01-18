@@ -4,7 +4,7 @@ defineProps({
 })
 </script>
 <template>
-        <NuxtLink :to=href class="text-xl text-white hover:text-blue font-prompt pr-3">
+        <NuxtLink :to=href class="text-3xl hover:text-purple">
             <slot />
         </NuxtLink>
 </template>
