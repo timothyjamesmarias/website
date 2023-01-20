@@ -3,7 +3,7 @@ const projectInfo = {
   Regeneshare: {
     src: "/img/regeneshare.png",
     name: "RegeneShare",
-    description: "A peer-to-peer rental marketplace for farm equipment and services.",
+    description: "A peer-to-peer rental marketplace for farm equipment and services. NOTICE: the server is very slow; we are working on migrating the wesbite to AWS right now and currently using a freemium server.",
     href: "https://regeneshare.com",
     list: [
       "Ruby on Rails",
