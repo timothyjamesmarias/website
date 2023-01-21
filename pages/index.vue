@@ -51,7 +51,7 @@ const projectInfo = {
 </script>
 <template>
   <div class="snap-container scrollbar-hide">
-    <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item">
+    <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item" id="welcome">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-0 items-center content-center">
         <img src="/img/timothy-marias.jpg" alt="Hero" class="w-64 h-64 sm:w-96 sm:h-96 object-cover rounded-full" />
         <GreetingsText>
@@ -65,8 +65,14 @@ const projectInfo = {
       <ProjectContainer :src="project.src" :listcolor="index" :name="project.name" :businesslink="project.businesslink" :description="project.description" :production="project.production" :staging="project.staging" :list="project.list" :github="project.github" />
     </PageSection>
 
-    <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item">
-      
+    <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item" id="contact">
+      <FormContainer>
+        <h2 class="text-3xl font-bold text-center text-green">Contact</h2>
+        <TextInput :type="'text'" :placeholder="'Name'" :name="'name'" class="mt-6"/>
+        <TextInput :type="'email'" :placeholder="'someone@gmail.com'" :name="'email'" class="mt-6"/>
+        <TextInput :type="'text'" :placeholder="'Subject'" :name="'subject'" class="mt-6"/>
+        <TextInput :type="'textarea'" :placeholder="'Message'" :name="'message'" class="mt-6"/>
+      </FormContainer>
     </PageSection>
   </div>
 </template>
