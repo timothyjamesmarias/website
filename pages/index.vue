@@ -4,7 +4,8 @@ const projectInfo = {
     src: "/img/regeneshare.png",
     name: "RegeneShare",
     description: "A peer-to-peer rental marketplace for farm equipment and services. NOTICE: the server is very slow; we are working on migrating the wesbite to AWS right now and currently using a freemium server.",
-    href: "https://regeneshare.com",
+    production: "https://regeneshare.com",
+    staging: "https://regeneshare-staging.onrender.com/",
     list: [
       "Ruby on Rails",
       "PostgreSQL",
@@ -17,7 +18,8 @@ const projectInfo = {
     src: "/img/rallytoflag.jpg",
     name: "Rally To Flag",
     description: "A central hub for finding Renaissance Faires and similar events.",
-    href: "https://staging.rallytoflag.com",
+    production: "https://rallytoflag.com",
+    staging: "https://staging.rallytoflag.com",
     list: [
       "Laravel",
       "Vue",
@@ -33,7 +35,7 @@ const projectInfo = {
     name: "Marius Armory",
     businesslink: "https://www.facebook.com/people/Marius-Armory/100076373375133/?mibextid=ZbWKwL",
     description: "Online store for ",
-    href: "https://staging.shop.mariusarmory.com",
+    staging: "https://staging.shop.mariusarmory.com",
     list: [
       "Laravel",
       "Apline",
@@ -60,7 +62,7 @@ const projectInfo = {
     </PageSection>
 
     <PageSection v-for="(project, key, index) in projectInfo" :key="key" :id="key" :background="index % 2 === 0 ? 'bg-secondary' : 'bg-background'" class="snap-item">
-      <ProjectContainer :src="project.src" :listcolor="index" :name="project.name" :businesslink="project.businesslink" :description="project.description" :href="project.href" :list="project.list" :github="project.github" />
+      <ProjectContainer :src="project.src" :listcolor="index" :name="project.name" :businesslink="project.businesslink" :description="project.description" :production="project.production" :staging="project.staging" :list="project.list" :github="project.github" />
     </PageSection>
 
     <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item">
@@ -79,6 +81,7 @@ const projectInfo = {
   overflow-y: scroll;
   scroll-behavior: smooth;
 }
+
 .snap-item {
   scroll-snap-align: center;
 }

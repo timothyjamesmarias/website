@@ -3,7 +3,8 @@ const props = defineProps<{
     src: string;
     name: string;
     description: string;
-    href: string;
+    production?: string;
+    staging?: string;
     list: string[];
     github?: string;
     listcolor: number;
@@ -21,9 +22,10 @@ const props = defineProps<{
             <List>
                 <ListItem v-for="item in list" :key="item" :color="listcolor">{{ item }}</ListItem>
             </List>
-            <div class="flex mt-5">
-            <BodyLink :href="href" :color="listcolor">Visit Site</BodyLink>
-            <BodyLink v-if="github" :href="github" :color="listcolor" class="ml-6">View on Github</BodyLink>
+            <div class="flex flex-row sm:flex-col mt-5">
+                <BodyLink v-if="staging" :color="listcolor">Staging Deployment</BodyLink>
+                <BodyLink v-if="production" :color="listcolor" class="ml-4 sm:ml-0">Production Deployment</BodyLink>
+                <BodyLink v-if="github" :href="github" :color="listcolor" class="ml-4 sm:ml-0">View on Github</BodyLink>
             </div>
         </div>
     </div>
