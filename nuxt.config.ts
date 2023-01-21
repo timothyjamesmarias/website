@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     },
   plugins: ['~/plugins/fontawesome.js'],
   css: ['@fortawesome/fontawesome-svg-core/styles.css'],
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/recaptcha"],
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
     configPath: "tailwind.config",
