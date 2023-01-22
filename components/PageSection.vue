@@ -4,7 +4,7 @@ const props = defineProps<{
 }>();
 </script>
 <template>
-    <section :class="background" class="h-screen flex items-center">
+    <section :class="background" class="min-h-screen flex items-center">
         <slot />
     </section>
 </template>
