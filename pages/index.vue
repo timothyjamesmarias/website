@@ -59,17 +59,18 @@ const mail = useMail();
 const sendMail = () => {
   mail.send({
     from: from.value,
-    to: "timothyjamesmarias@gmail.com",
     subject: subject.value,
     message: message.value,
   });
 };
 
 const submit = () => {
+  processing.value = true;
   sendMail();
   from.value = "";
   subject.value = "";
   message.value = "";
+  processing.value = false;
 };
 </script>
 <template>
@@ -90,14 +91,14 @@ const submit = () => {
 
     <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item" id="contact">
       <FormContainer>
-        <h2 class="text-3xl font-bold text-center text-green">Contact</h2>
+        <h2 class="text-3xl font-bold text-center text-green mt-3">Contact</h2>
         <form method="POST" @submit.prevent="submit">
           <InputLabel :value="'Your Email'" class="mt-4"/>
-          <TextInput :type="'email'" :placeholder="'someone@gmail.com'" :name="'email'" v-model="from" class="mt-2"/>
+          <TextInput :type="'email'" :placeholder="'someone@gmail.com'" :name="'email'" v-model="from" class="mt-1"/>
           <InputLabel :value="'Subject'" class="mt-4"/>
-          <TextInput :type="'text'" :placeholder="'Subject'" :name="'subject'" v-model="subject" class="mt-2"/>
+          <TextInput :type="'text'" :placeholder="'Subject'" :name="'subject'" v-model="subject" class="mt-1"/>
           <InputLabel :value="'Message'" class="mt-4"/>
-          <TextAreaInput :placeholder="'Message'" :name="'message'" v-model="message" class="mt-2"/>
+          <TextAreaInput :placeholder="'Message'" :name="'message'" v-model="message" class="mt-1"/>
           <SubmitButton :value="'Send'" class="mt-4 float-right" :disabled="processing"/>
         </form>
       </FormContainer>

@@ -25,9 +25,10 @@ export default defineNuxtConfig({
       to: "timothyjamesmarias@gmail.com",
     },
     smtp: {
-      host: "",
-      port: 465,
-      secure: true,
+      host: "smtp.mailgun.org",
+      port: 587,
+      auth: {
+      },
     }
   },
 });
