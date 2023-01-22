@@ -17,6 +17,6 @@ const emits = defineEmits<{
         :value="value" 
         :name="name" 
         @input="updateValue($event.target.value)" 
-        class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:border-gray-500"
+        class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:border-purple focus:ring focus:ring-purple"
         />
 </template>

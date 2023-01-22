@@ -12,12 +12,22 @@ export default defineNuxtConfig({
     },
   plugins: ['~/plugins/fontawesome.js'],
   css: ['@fortawesome/fontawesome-svg-core/styles.css'],
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/recaptcha"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-mail"],
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",
     configPath: "tailwind.config",
     exposeConfig: false,
     injectPosition: 0,
     viewer: true,
+  },
+  mail: {
+    message: {
+      to: "timothyjamesmarias@gmail.com",
+    },
+    smtp: {
+      host: "",
+      port: 465,
+      secure: true,
+    }
   },
 });

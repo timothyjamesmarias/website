@@ -3,7 +3,7 @@ const projectInfo = {
   Regeneshare: {
     src: "/img/regeneshare.png",
     name: "RegeneShare",
-    description: "A peer-to-peer rental marketplace for farm equipment and services. NOTICE: the server is very slow; we are working on migrating the wesbite to AWS right now and currently using a freemium server.",
+    description: "A peer-to-peer rental marketplace for farm equipment and services, like an AirBnB or Craig's List for farmers. NOTICE: the server is very slow; we are working on migrating the wesbite to AWS right now and currently using a freemium server.",
     production: "https://regeneshare.com",
     staging: "https://regeneshare-staging.onrender.com/",
     list: [
@@ -17,7 +17,7 @@ const projectInfo = {
   RallyToFlag: {
     src: "/img/rallytoflag.jpg",
     name: "Rally To Flag",
-    description: "A central hub for finding Renaissance Faires and similar events.",
+    description: "A hub for finding Renaissance Faires and similar events. Search for and post upcoming events.",
     production: "https://rallytoflag.com",
     staging: "https://staging.rallytoflag.com",
     list: [
@@ -48,6 +48,21 @@ const projectInfo = {
     github: "https://github.com/MariusArmory/webshop",
   },
 };
+
+const from: string = ref("");
+const subject: string = ref("");
+const message: string = ref("");
+
+const mail = useMail();
+
+const sendMail = () => {
+  mail.send({
+    from: from.value,
+    to: "timothyjamesmarias@gmail.com",
+    subject: subject.value,
+    message: message.value,
+  });
+};
 </script>
 <template>
   <div class="snap-container scrollbar-hide">
@@ -68,10 +83,15 @@ const projectInfo = {
     <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item" id="contact">
       <FormContainer>
         <h2 class="text-3xl font-bold text-center text-green">Contact</h2>
-        <TextInput :type="'text'" :placeholder="'Name'" :name="'name'" class="mt-6"/>
-        <TextInput :type="'email'" :placeholder="'someone@gmail.com'" :name="'email'" class="mt-6"/>
-        <TextInput :type="'text'" :placeholder="'Subject'" :name="'subject'" class="mt-6"/>
-        <TextInput :type="'textarea'" :placeholder="'Message'" :name="'message'" class="mt-6"/>
+        <form method="POST" action="">
+          <InputLabel :value="'Your Email'" class="mt-4"/>
+          <TextInput :type="'email'" :placeholder="'someone@gmail.com'" :name="'email'" v-model="from" class="mt-2"/>
+          <InputLabel :value="'Subject'" class="mt-4"/>
+          <TextInput :type="'text'" :placeholder="'Subject'" :name="'subject'" v-model="subject" class="mt-2"/>
+          <InputLabel :value="'Message'" class="mt-4"/>
+          <TextAreaInput :placeholder="'Message'" :name="'message'" v-model="message" class="mt-2"/>
+          <SubmitButton :value="'Send'" :onclick="sendMail" class="mt-4 float-right"/>
+        </form>
       </FormContainer>
     </PageSection>
   </div>
