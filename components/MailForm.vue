@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
-const MailGun = require("mailgun-js");
+import "mailgun-js";
 
 const from: string = ref("");
 const subject: string = ref("");
@@ -9,15 +9,26 @@ const processing: boolean = ref(false);
 const API_KEY = 'YOUR_API_KEY';
 const DOMAIN = 'YOUR_DOMAIN_NAME';
 
-const client = mailgun.client({});
 
-const submit = () => {
+const messageData = {
+  from: from.value,
+  to: config.mailgun_to,
+  subject: subject.value,
+  text: message.value,
+};
+
+const sendMail = async () => {
   processing.value = true;
-  sendMail();
-  from.value = "";
-  subject.value = "";
-  message.value = "";
-  processing.value = false;
+  try {
+    await client.messages.create(config.mailgun_domain, messageData);
+    from.value = "";
+    subject.value = "";
+    message.value = "";
+    processing.value = false;
+  } catch (error) {
+    console.log(error);
+    processing.value = false;
+  }
 };
 
 onMounted(() => {
@@ -25,6 +36,15 @@ onMounted(() => {
     apiKey: config.mailgun_api_key,
     domain: config.mailgun_domain,
   });
+    const client = mailgun.client({
+        username: 'api',
+        key: config.mailgun_key
+    });
+});
+watchEffect(() => {
+  console.log(from.value);
+  console.log(subject.value);
+  console.log(message.value);
 });
 </script>
 <template>

@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     },
   plugins: ['~/plugins/fontawesome.js'],
   css: ['@fortawesome/fontawesome-svg-core/styles.css'],
-  modules: ["@nuxtjs/tailwindcss", "nuxt-mail"],
+  modules: ["@nuxtjs/tailwindcss"],
   runtimeConfig: {
     mailgun_key: process.env.MAILGUN_KEY,
     mailgun_domain: process.env.MAILGUN_DOMAIN,
