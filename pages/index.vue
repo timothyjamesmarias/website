@@ -52,6 +52,7 @@ const projectInfo = {
 const from: string = ref("");
 const subject: string = ref("");
 const message: string = ref("");
+const processing: boolean = ref(false);
 
 const mail = useMail();
 
@@ -62,6 +63,13 @@ const sendMail = () => {
     subject: subject.value,
     message: message.value,
   });
+};
+
+const submit = () => {
+  sendMail();
+  from.value = "";
+  subject.value = "";
+  message.value = "";
 };
 </script>
 <template>
@@ -83,14 +91,14 @@ const sendMail = () => {
     <PageSection background="bg-background" class="mx-4 sm:mx-44 snap-item" id="contact">
       <FormContainer>
         <h2 class="text-3xl font-bold text-center text-green">Contact</h2>
-        <form method="POST" action="">
+        <form method="POST" @submit.prevent="submit">
           <InputLabel :value="'Your Email'" class="mt-4"/>
           <TextInput :type="'email'" :placeholder="'someone@gmail.com'" :name="'email'" v-model="from" class="mt-2"/>
           <InputLabel :value="'Subject'" class="mt-4"/>
           <TextInput :type="'text'" :placeholder="'Subject'" :name="'subject'" v-model="subject" class="mt-2"/>
           <InputLabel :value="'Message'" class="mt-4"/>
           <TextAreaInput :placeholder="'Message'" :name="'message'" v-model="message" class="mt-2"/>
-          <SubmitButton :value="'Send'" :onclick="sendMail" class="mt-4 float-right"/>
+          <SubmitButton :value="'Send'" class="mt-4 float-right" :disabled="processing"/>
         </form>
       </FormContainer>
     </PageSection>
