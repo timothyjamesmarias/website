@@ -35,17 +35,17 @@ const projectInfo = {
     name: "Marius Armory",
     businesslink: "https://www.facebook.com/people/Marius-Armory/100076373375133/?mibextid=ZbWKwL",
     description: "Online store for ",
-    staging: "https://staging.shop.mariusarmory.com",
+    staging: "https://shop.mariusarmory.com",
     list: [
-      "Laravel",
-      "Apline",
-      "LiveWire",
+      "Ruby on Rails",
+      "PostgreSQL",
       "Tailwind",
-      "MySQL",
+      "DaisyUI",
+      "Solidus",
       "Stripe",
       "Still under construction!",
     ],
-    github: "https://github.com/MariusArmory/webshop",
+    github: "https://github.com/MariusArmory/store",
   },
 };
 
@@ -56,7 +56,7 @@ const projectInfo = {
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-0 items-center content-center">
         <img src="/img/timothy-marias.jpg" alt="Hero" class="w-64 h-64 sm:w-96 sm:h-96 object-cover rounded-full" />
         <GreetingsText>
-          Hi, my name's Tim and I'm a full-stack web developer in love with Laravel and Vue. 
+          Hi, my name's Tim and I'm a full-stack web developer in love with Rails, Laravel, and Vue. 
           Check out my <BodyLink :color="1" :href="'https://github.com/timothyjamesmarias'">Github</BodyLink> or my projects below!
         </GreetingsText>
       </div>
