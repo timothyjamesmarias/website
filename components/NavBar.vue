@@ -1,9 +1,9 @@
 <template>
-<nav class="flex justify-between align-center sticky top-0 select-none p-4 bg-background drop-shadow-lg">
-    <NavItem :href="'/'">
+<nav class="navbar bg-secondary">
+    <NavItem :href="'/'" class="flex-1">
         Timothy Marias
     </NavItem>
-    <NavItem :href="'https://github.com/timothyjamesmarias'">
+    <NavItem :href="'https://github.com/timothyjamesmarias'" class="flex-none">
         <font-awesome-icon :icon="['fab', 'github']" />
     </NavItem>
 </nav>

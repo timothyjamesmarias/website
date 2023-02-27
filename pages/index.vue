@@ -62,8 +62,12 @@ const projectInfo = {
       </div>
     </PageSection>
 
-    <PageSection v-for="(project, key, index) in projectInfo" :key="key" :id="key" :background="index % 2 === 0 ? 'bg-secondary' : 'bg-background'" class="snap-item">
+    <PageSection v-for="(project, key, index) in projectInfo" :key="key" :id="key" :background="index % 2 === 0 ? 'bg-neutral' : 'bg-base-100'" class="snap-item">
       <ProjectContainer :src="project.src" :listcolor="index" :name="project.name" :businesslink="project.businesslink" :description="project.description" :production="project.production" :staging="project.staging" :list="project.list" :github="project.github" />
+    </PageSection>
+
+    <PageSection background="bg-base-100" class="snap-item" id="contact">
+      <ContactForm />
     </PageSection>
   </div>
 </template>

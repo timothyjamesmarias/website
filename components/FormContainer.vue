@@ -1,7 +1,5 @@
-<script setup lang="ts">
-</script>
 <template>
-  <div class="w-full px-6 py-4 overflow-hidden rounded-lg bg-secondary">
+  <div class="max-w-1/2 px-6 py-4 overflow-hidden rounded-lg bg-neutral">
       <slot />
   </div>
 </template>
