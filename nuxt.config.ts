@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     },
   plugins: ['~/plugins/fontawesome.js'],
   css: ['@fortawesome/fontawesome-svg-core/styles.css'],
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode"],
   runtimeConfig: {
     mailgun_key: process.env.MAILGUN_KEY,
     mailgun_domain: process.env.MAILGUN_DOMAIN,
@@ -24,5 +24,10 @@ export default defineNuxtConfig({
     exposeConfig: false,
     injectPosition: 0,
     viewer: true,
+  },
+  colorMode: {
+    preference: "dracula",
+    dataValue: 'theme',
+    classSuffix: '',
   },
 });

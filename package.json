@@ -20,6 +20,7 @@
   "dependencies": {
     "@fontsource/iosevka": "^4.5.4",
     "@fortawesome/vue-fontawesome": "^3.0.2",
+    "@nuxtjs/color-mode": "^3.2.0",
     "@nuxtjs/recaptcha": "^1.1.1",
     "daisyui": "^2.51.1",
     "mailgun.js": "^8.0.6",
