@@ -1,5 +1,5 @@
 <template>
-  <p class="">
+  <p class="leading-relaxed text-md">
     <slot />
   </p>
 </template>
