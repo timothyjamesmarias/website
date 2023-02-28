@@ -4,7 +4,7 @@ defineProps({
 })
 </script>
 <template>
-        <NuxtLink :to=href class="text-3xl hover:text-secondary-content">
-            <slot />
-        </NuxtLink>
+  <NuxtLink :to=href class="text-3xl hover:text-secondary-content">
+      <slot />
+  </NuxtLink>
 </template>

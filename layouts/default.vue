@@ -2,7 +2,7 @@
 import "@fontsource/iosevka"
 </script>
 <template>
-  <div class="min-h-screen bg-base-100 text-main text-lg selection:bg-secondary-focus">
+  <div class="min-h-screen bg-base-100 selection:bg-secondary-focus">
     <NavBar />
     <main class="">
       <slot />
@@ -11,6 +11,9 @@ import "@fontsource/iosevka"
 </template>
 
 <style global>
+* {
+  font-family: 'Iosevka', monospace;
+}
 html{
   scroll-behavior: smooth;
 }
