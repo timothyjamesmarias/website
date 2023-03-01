@@ -21,7 +21,7 @@
       </NavItem>
     </div>
     <div class="flex-none sm:hidden dropdown dropdown-end">
-      <label tabindex="0" class="text-3xl hover:text-secondary-content">
+      <label tabindex="0" class="text-2xl hover:text-secondary-content">
         <font-awesome-icon :icon="['fas', 'bars']" class=""/>
       </label>
       <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-300 rounded-box">

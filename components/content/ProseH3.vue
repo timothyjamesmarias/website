@@ -1,5 +1,5 @@
 <template>
-  <h2 class="text-xl font-semibold text-success mb-4">
+  <h3 class="text-xl font-semibold text-success mb-4">
     <slot />
-  </h2>
+  </h3>
 </template>
