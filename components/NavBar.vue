@@ -13,7 +13,7 @@
       <NavItem :href="'/blog'" class="ml-6">
           <font-awesome-icon :icon="['fas', 'book']" />
       </NavItem>
-      <NavItem :href="'/rss'" class="ml-6">
+      <NavItem :href="'/rss.xml'" class="ml-6">
           <font-awesome-icon :icon="['fas', 'rss']" />
       </NavItem>
       <NavItem :href="'https://github.com/timothyjamesmarias'" class="ml-6">
@@ -36,7 +36,7 @@
           </NavItem>
         </li>
         <li>
-          <NavItem :href="'/rss'">
+          <NavItem :href="'/rss.xml'">
               <font-awesome-icon :icon="['fas', 'rss']" />
           </NavItem>
         </li>
