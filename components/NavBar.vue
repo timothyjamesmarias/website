@@ -13,9 +13,9 @@
       <NavItem :href="'/blog'" class="ml-6">
           <font-awesome-icon :icon="['fas', 'book']" />
       </NavItem>
-      <NavItem :href="'/rss.xml'" class="ml-6">
+      <a href="/rss.xml" class="text-2xl hover:text-secondary-content ml-6">
           <font-awesome-icon :icon="['fas', 'rss']" />
-      </NavItem>
+      </a>
       <NavItem :href="'https://github.com/timothyjamesmarias'" class="ml-6">
           <font-awesome-icon :icon="['fab', 'github']" />
       </NavItem>
@@ -36,9 +36,9 @@
           </NavItem>
         </li>
         <li>
-          <NavItem :href="'/rss.xml'">
+          <a href="/rss.xml" class="text-2xl hover:text-secondary-content">
               <font-awesome-icon :icon="['fas', 'rss']" />
-          </NavItem>
+          </a>
         </li>
         <li>
           <NavItem :href="'https://github.com/timothyjamesmarias'">
