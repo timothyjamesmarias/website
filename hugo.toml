@@ -1,0 +1,7 @@
+baseURL = 'https://timothyjamesmarias.github.io/website/'
+languageCode = 'en-us'
+title = 'My Site'
+
+[module]
+  [[module.imports]]
+    path = "github.com/adityatelange/hugo-PaperMod"
