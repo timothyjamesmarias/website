@@ -1,7 +1,0 @@
-baseURL = 'https://timothymarias.com/'
-languageCode = 'en-us'
-title = 'My Site'
-
-[module]
-  [[module.imports]]
-    path = "github.com/adityatelange/hugo-PaperMod"
