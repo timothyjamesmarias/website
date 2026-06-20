@@ -1,5 +1,7 @@
 (in-package #:website)
 
+(defparameter output-dir "public/")
+
 (defun markdown-file-p (path)
   (string-equal (pathname-type path) "md"))
 
@@ -11,7 +13,9 @@
   (uiop:read-file-string file))
 
 (defun html-file-name (file)
-  (concatenate 'string (pathname-name file) ".html"))
+  (let* ((fname (concatenate 'string (pathname-name file) ".html"))
+    (output-name (concatenate 'string output-dir fname)))
+    output-name))
 
 (defun build-page (file)
   (let* ((md-file-contents (get-content-from-file file))
@@ -19,12 +23,12 @@
     converted-html-contents))
 
 (defun build-html-page (file)
+  (ensure-directories-exist output-dir)
   (with-open-file (stream (html-file-name file)
                           :direction :output
                           :if-exists :supersede
                           :if-does-not-exist :create)
-    (write-line (build-page file) stream))
-  )
+    (write-line (build-page file) stream)))
 
 (defun walk-content-files (root fn)
   (labels ((walk (dir)
