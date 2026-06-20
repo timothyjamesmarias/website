@@ -3,6 +3,7 @@
   :serial t
   :components ((:file "package")
                (:file "main")
+               (:file "file-watcher")
                (:file "shared")
                (:file "ssg")
                (:file "pages")

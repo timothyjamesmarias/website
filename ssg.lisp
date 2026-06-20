@@ -22,7 +22,7 @@
                  (funcall fn file)))
              (dolist (subdir (uiop:subdirectories dir))
                (walk subdir))))
-    (walk (pathname *input-dir*))))
+    (walk (pathname root))))
 
 (defun build-content-pages ()
   (walk-content-files

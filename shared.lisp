@@ -1,5 +1,6 @@
 (in-package #:website)
 
+(defparameter *root-dir* "./")
 (defparameter *input-dir* "content/")
 (defparameter *output-dir* "public/")
 
