@@ -3,6 +3,7 @@
   :serial t
   :components ((:file "package")
                (:file "main")
+               (:file "shared")
                (:file "ssg")
                (:file "pages")
                (:file "components")

@@ -1,7 +1,9 @@
 (in-package #:website)
+(setf spinneret:*html-style* :tree)
 
 (defun build ()
-  (build-content-pages))
+  (build-content-pages)
+  (build-non-content-pages))
 
 (defun dev ()
   (build)
