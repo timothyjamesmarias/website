@@ -1,10 +1,7 @@
 (in-package #:website)
 
 (defun build ()
-  (walk-content-files
-   #P"content/"
-   (lambda (file)
-     (build-html-page file))))
+  (build-content-pages))
 
 (defun dev ()
   (build)
