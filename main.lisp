@@ -2,9 +2,8 @@
 (setf spinneret:*html-style* :tree)
 
 (defparameter *dev-mode* nil)
-(defparameter *cv* (bt:make-condition-variable))
-(defparameter *lock* (bt:make-lock))
 (defparameter *files-changed* nil)
+(defparameter *build-version* 0)
 
 (defun build-all-pages ()
   (build-content-pages)
@@ -21,9 +20,7 @@
    *watch-interval*
    (lambda ()
      (build-all-pages)
-      (bt:with-lock-held (*lock*)
-        (setf *files-changed* t)
-        (bt:condition-notify *cv*))))
+     (incf *build-version*)))
   (hunchentoot:start
    (make-instance 'hunchentoot:easy-acceptor
                   :port 8080
@@ -41,17 +38,14 @@
   (setf (hunchentoot:reply-external-format*) :utf-8)
   (setf (hunchentoot:header-out "Transfer-Encoding") "identity")
   (let* ((raw (hunchentoot:send-headers))
-         (stream (flexi-streams:make-flexi-stream raw :external-format :utf-8)))
-    (format stream ": keepalive~%~%")
-    (force-output stream)
+         (stream (flexi-streams:make-flexi-stream raw :external-format :utf-8))
+         (last-seen *build-version*))
     (handler-case
         (loop
-          (bt:with-lock-held (*lock*)
-            (loop until *files-changed*
-                  do (bt:condition-wait *cv* *lock*)))
+          (when (/= *build-version* last-seen)
+          (setf last-seen *build-version*)
           (format t "SSE: sending event~%")
           (format stream "data: changed~%~%")
-          (force-output stream)
-          (bt:with-lock-held (*lock*)
-            (setf *files-changed* nil)))
-      (error () nil))))
+          (force-output stream))
+      (sleep 0.5))
+    (error () nil))))
