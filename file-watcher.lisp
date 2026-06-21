@@ -11,8 +11,10 @@
                       (sleep interval)
                       (when (some-file-newer-p dir last-build)
                         (format t "~a~%" "debug log: something changed")
+                        (setf *files-changed* t)
                         (funcall fn)
                         (setf last-build (get-universal-time)))))))))
+
 
 (defun walk-project-files (root)
   (let ((files nil))
