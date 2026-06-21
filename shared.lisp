@@ -2,7 +2,7 @@
 
 (defparameter *root-dir* "./")
 (defparameter *input-dir* "content/")
-(defparameter *output-dir* "public/")
+(defparameter *output-dir* "docs/")
 
 (defun get-output-html-file-name (file)
   (let* ((fname (concatenate 'string (pathname-name file) ".html"))

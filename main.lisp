@@ -27,7 +27,7 @@
   (hunchentoot:start
    (make-instance 'hunchentoot:easy-acceptor
                   :port 8080
-                  :document-root #p "public/")))
+                  :document-root #p "docs/")))
 
 (push (hunchentoot:create-folder-dispatcher-and-handler "/development/" "development/")
       hunchentoot:*dispatch-table*)

@@ -10,4 +10,4 @@ build:
 		 --eval '($(APP):build)'
 
 clean:
-	rm -rf public/
+	rm -rf docs/
