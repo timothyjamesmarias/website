@@ -9,12 +9,12 @@
          (lambda () (let ((last-build (get-universal-time)))
                     (loop
                       (sleep interval)
-                      (when (some-file-newer-p dir last-build)
+                      (when (> (newest-time dir) last-build)
                         (format t "~a~%" "debug log: something changed")
+                        (format t "newest: ~a last-build: ~a~%" (newest-time dir) last-build)
                         (setf *files-changed* t)
                         (funcall fn)
-                        (setf last-build (get-universal-time)))))))))
-
+                        (setf last-build (newest-time dir)))))))))
 
 (defun walk-project-files (root)
   (let ((files nil))
@@ -22,7 +22,8 @@
                (dolist (file (uiop:directory-files dir))
                  (push file files))
              (dolist (subdir (uiop:subdirectories dir))
-               (walk subdir))))
+               (unless (equal (enough-namestring subdir) *output-dir*)
+               (walk subdir)))))
              (walk (pathname root)))
     files))
 
@@ -31,3 +32,11 @@
     (dolist (file files)
       (when (> (file-write-date file) latest-date)
         (return t)))))
+
+(defun newest-time (dir)
+  (let ((latest 0))
+    (dolist (file (walk-project-files dir))
+      (let ((mtime (file-write-date file)))
+        (when (> mtime latest)
+          (setf latest mtime))))
+    latest))
