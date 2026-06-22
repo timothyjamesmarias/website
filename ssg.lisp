@@ -15,6 +15,15 @@
          (converted-html-contents (convert-md-to-html md-file-contents)))
     (default-layout converted-html-contents)))
 
+(defun extract-dirs (file)
+  (directory-namestring
+        (enough-namestring
+         (pathname file)
+         (truename *input-dir*))))
+
+(defun build-content-output-file (file)
+  (concatenate 'string *output-dir* (extract-dirs file) (build-output-html-file-name file)))
+
 (defun walk-content-files (root fn)
   (labels ((walk (dir)
              (dolist (file (uiop:directory-files dir))
@@ -28,4 +37,4 @@
   (walk-content-files
    (pathname *input-dir*)
    (lambda (file)
-     (build-html-page (lambda (file) (build-content-page file)) file))))
+     (build-html-page (lambda (file) (build-content-page file)) (build-content-output-file file)))))

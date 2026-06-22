@@ -11,9 +11,7 @@
    header text
   </p>
  </header>
- <main><p>
- 404 page not found
-</p>
+ <main>
  </main>
  <footer>
   <p>

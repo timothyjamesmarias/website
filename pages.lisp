@@ -16,7 +16,7 @@
         name)))
 
 (defun get-non-content-page-file-name (name)
-  (get-output-html-file-name (truncate-page-name name)))
+  (truncate-page-name name))
 
 (defun build-non-content-pages ()
   (dolist (page-fn *pages*)
