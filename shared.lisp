@@ -4,9 +4,6 @@
 (defparameter *input-dir* "content/")
 (defparameter *output-dir* "docs/")
 
-(defun build-output-html-file-name (file)
-  (concatenate 'string (pathname-name file) ".html"))
-
 (defun build-html-page (fn file)
   (ensure-directories-exist file)
   (with-open-file (stream file

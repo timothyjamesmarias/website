@@ -1,6 +1,7 @@
 (in-package #:website)
 
-(defparameter *pages* '(blog-page 404-page))
+(defparameter *pages* '((blog-page . "blog")
+                        (404-page . "errors/404")))
 
 (defun blog-page ()
   (with-html-string
@@ -10,17 +11,13 @@
   (with-html-string
     (:p "404 page not found")))
 
-(defun truncate-page-name (name)
-  (let ((pos (search "-page" name)))
-    (if pos (subseq name 0 pos)
-        name)))
-
-(defun get-non-content-page-file-name (name)
-  (truncate-page-name name))
+(defun build-non-content-output-file (file)
+  (concatenate 'string *output-dir* file ".html"))
 
 (defun build-non-content-pages ()
-  (dolist (page-fn *pages*)
-    (let* ((file (get-non-content-page-file-name (string-downcase (symbol-name page-fn)))))
-      (build-html-page (lambda (file)
-                         (default-layout (funcall page-fn)))
-                       file))))
+  (dolist (page-cons *pages*)
+    (let* ((page-file (cdr page-cons))
+           (page-fn (car page-cons)))
+           (build-html-page
+             (lambda (page-file) (default-layout (funcall page-fn)))
+             (build-non-content-output-file page-file)))))

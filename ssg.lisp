@@ -17,12 +17,15 @@
 
 (defun extract-dirs (file)
   (directory-namestring
-        (enough-namestring
-         (pathname file)
-         (truename *input-dir*))))
+   (enough-namestring
+    (pathname file)
+    (truename *input-dir*))))
 
 (defun build-content-output-file (file)
-  (concatenate 'string *output-dir* (extract-dirs file) (build-output-html-file-name file)))
+  (concatenate 'string
+               *output-dir*
+               (extract-dirs file)
+               (concatenate 'string (pathname-name file) ".html")))
 
 (defun walk-content-files (root fn)
   (labels ((walk (dir)
@@ -37,4 +40,6 @@
   (walk-content-files
    (pathname *input-dir*)
    (lambda (file)
-     (build-html-page (lambda (file) (build-content-page file)) (build-content-output-file file)))))
+     (build-html-page
+      (lambda (file) (build-content-page file))
+      (build-content-output-file file)))))
