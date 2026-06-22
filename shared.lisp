@@ -10,4 +10,4 @@
                           :direction :output
                           :if-exists :supersede
                           :if-does-not-exist :create)
-    (write-line (funcall fn file) stream)))
+    (write-line (funcall fn) stream)))

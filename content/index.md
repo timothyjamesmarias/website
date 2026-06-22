@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html lang=en>
- <head>
-  <meta charset=UTF-8>
-  <title>
-   title string
-  </title>
- </head>
- <header>
-  <p>
-   header text
-  </p>
- </header>
- <main>
- </main>
- <footer>
-  <p>
-   footer text
-  </p>
- </footer>
-</html>
+# Index page
+
+look at this super cool html generated from markdown
+I am web dev!!!

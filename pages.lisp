@@ -19,5 +19,5 @@
     (let* ((page-file (cdr page-cons))
            (page-fn (car page-cons)))
            (build-html-page
-             (lambda (page-file) (default-layout (funcall page-fn)))
+             (lambda () (default-layout (funcall page-fn)))
              (build-non-content-output-file page-file)))))

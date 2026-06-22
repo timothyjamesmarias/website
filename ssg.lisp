@@ -41,5 +41,5 @@
    (pathname *input-dir*)
    (lambda (file)
      (build-html-page
-      (lambda (file) (build-content-page file))
+      (lambda () (build-content-page file))
       (build-content-output-file file)))))
