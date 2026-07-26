@@ -2,7 +2,10 @@
 interface Props {
 	index: string;
 	label: string;
-	/** Hairline above the section; the first section on a page omits it. */
+	/**
+	 * Hairline above the section. Omit when the section's own content opens
+	 * with a rule, so the two don't stack into a double separator.
+	 */
 	divided?: boolean;
 }
 
@@ -12,7 +15,7 @@ const { index, label, divided = true } = Astro.props;
 <section
 	class:list={[
 		'grid grid-cols-1 gap-x-8 gap-y-6 px-6 pb-14 md:grid-cols-[96px_1fr] md:px-18',
-		divided && 'border-t border-rule pt-8',
+		divided ? 'border-t border-rule pt-8' : 'pt-8',
 	]}
 >
 	<h2 class="eyebrow">{index} / {label}</h2>
