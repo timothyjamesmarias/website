@@ -51,10 +51,7 @@ const channels = [
 								{channel.copy ? (
 									<CopyEmail email={email} />
 								) : channel.href ? (
-									<a
-										href={channel.href}
-										class="text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
-									>
+									<a href={channel.href} class="link">
 										{channel.value}
 									</a>
 								) : (

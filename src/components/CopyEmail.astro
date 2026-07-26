@@ -7,10 +7,7 @@ const { email } = Astro.props;
 ---
 
 <span class="inline-flex items-baseline gap-3">
-	<a
-		href={`mailto:${email}`}
-		class="text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
-	>
+	<a href={`mailto:${email}`} class="link">
 		{email}
 	</a>
 	<button
