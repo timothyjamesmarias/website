@@ -52,6 +52,13 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 4);
 
+const hasNotes = posts.length > 0;
+
+// Section numbers follow what actually renders, so hiding Notes doesn't
+// leave a gap in the sequence. The hero is 00, so numbering starts after it.
+let section = 0;
+const num = () => String(++section).padStart(2, '0');
+
 const stamp = (date: Date) =>
 	date
 		.toLocaleDateString('en-GB', {
@@ -116,17 +123,15 @@ const stamp = (date: Date) =>
 		</aside>
 	</div>
 
-	<Section index="01" label="Work" divided={false}>
+	<Section index={num()} label="Work" divided={false}>
 		<div class="border-b border-rule-strong">
 			{work.map((item, i) => <WorkRow {...item} first={i === 0} />)}
 		</div>
 	</Section>
 
-	<Section index="02" label="Notes" divided={false}>
-		{
-			posts.length === 0 ? (
-				<p class="text-body text-ink-muted">Nothing published yet.</p>
-			) : (
+	{
+		hasNotes && (
+			<Section index={num()} label="Notes" divided={false}>
 				<ul>
 					{posts.map((post) => (
 						<li>
@@ -147,17 +152,17 @@ const stamp = (date: Date) =>
 						</li>
 					))}
 				</ul>
-			)
-		}
-		<a
-			href="/blog/"
-			class="mt-6 inline-block text-caption tracking-wider text-ink-muted uppercase no-underline transition-colors hover:text-accent"
-		>
-			All notes &rarr;
-		</a>
-	</Section>
+				<a
+					href="/blog/"
+					class="mt-6 inline-block text-caption tracking-wider text-ink-muted uppercase no-underline transition-colors hover:text-accent"
+				>
+					All notes &rarr;
+				</a>
+			</Section>
+		)
+	}
 
-	<Section index="03" label="Contact">
+	<Section index={num()} label="Contact">
 		<p class="max-w-[460px] text-[0.9375rem] leading-normal text-ink-muted">
 			Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
 			doloremque laudantium.
