@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
-import WorkRow from '../components/WorkRow.astro';
+import ProjectRow from '../components/ProjectRow.astro';
 import CopyEmail from '../components/CopyEmail.astro';
 
 // Placeholder content — replace with real copy.
@@ -126,7 +126,7 @@ const stamp = (date: Date) =>
 
 	<Section index={num()} label="Projects" divided={false}>
 		<div class="border-b border-rule-strong">
-			{projects.map((item, i) => <WorkRow {...item} first={i === 0} />)}
+			{projects.map((item, i) => <ProjectRow {...item} first={i === 0} />)}
 		</div>
 	</Section>
 
