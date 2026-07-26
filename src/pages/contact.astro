@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CopyEmail from '../components/CopyEmail.astro';
+
+const email = 'tim@timothymarias.com';
 
 // Placeholder content — replace with real copy.
 const channels = [
-	{ label: 'Email', value: 'tim@timothymarias.com', href: 'mailto:tim@timothymarias.com' },
+	{ label: 'Email', copy: true },
 	{ label: 'GitHub', value: 'timothyjamesmarias', href: 'https://github.com/timothyjamesmarias' },
 	{ label: 'Location', value: 'Lorem, IP' },
 	{ label: 'Reply time', value: '~2 days' },
@@ -45,7 +48,9 @@ const channels = [
 								{channel.label}
 							</dt>
 							<dd class="text-ink">
-								{channel.href ? (
+								{channel.copy ? (
+									<CopyEmail email={email} />
+								) : channel.href ? (
 									<a
 										href={channel.href}
 										class="text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"

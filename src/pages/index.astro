@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import WorkRow from '../components/WorkRow.astro';
+import CopyEmail from '../components/CopyEmail.astro';
 
 // Placeholder content — replace with real copy.
 const status = [
@@ -92,12 +93,6 @@ const stamp = (date: Date) =>
 				>
 					Get in touch
 				</a>
-				<a
-					href="#"
-					class="border border-rule-strong px-5 py-[11px] text-caption font-bold tracking-wide text-ink uppercase no-underline transition-colors hover:bg-ink hover:text-page"
-				>
-					Résumé (PDF)
-				</a>
 			</div>
 		</div>
 
@@ -172,13 +167,8 @@ const stamp = (date: Date) =>
 			Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
 			doloremque laudantium.
 		</p>
-		<div class="mt-5 flex flex-wrap gap-x-6 gap-y-2">
-			<a
-				href="mailto:tim@timothymarias.com"
-				class="text-small text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
-			>
-				tim@timothymarias.com
-			</a>
+		<div class="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-small">
+			<CopyEmail email="tim@timothymarias.com" />
 			<a
 				href="https://github.com/timothyjamesmarias"
 				class="text-small text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"

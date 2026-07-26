@@ -1,0 +1,50 @@
+---
+interface Props {
+	email: string;
+}
+
+const { email } = Astro.props;
+---
+
+<span class="inline-flex items-baseline gap-3">
+	<a
+		href={`mailto:${email}`}
+		class="text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
+	>
+		{email}
+	</a>
+	<button
+		type="button"
+		data-copy-email={email}
+		class="cursor-pointer bg-transparent text-micro tracking-wider text-ink-faint uppercase transition-colors hover:text-accent"
+	>
+		<span data-copy-label>Copy</span>
+	</button>
+</span>
+
+<script>
+	// mailto: dead-ends when no mail client is configured; copying always works.
+	document
+		.querySelectorAll<HTMLButtonElement>('[data-copy-email]')
+		.forEach((button) => {
+			const label = button.querySelector<HTMLElement>('[data-copy-label]');
+			let timer: ReturnType<typeof setTimeout>;
+
+			button.addEventListener('click', async () => {
+				const email = button.dataset.copyEmail;
+				if (!email || !label) return;
+
+				try {
+					await navigator.clipboard.writeText(email);
+					label.textContent = 'Copied';
+				} catch {
+					label.textContent = 'Press ⌘C';
+				}
+
+				clearTimeout(timer);
+				timer = setTimeout(() => {
+					label.textContent = 'Copy';
+				}, 2000);
+			});
+		});
+</script>
