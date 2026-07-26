@@ -3,14 +3,28 @@ interface Props {
 	index: string;
 	title: string;
 	summary: string;
-	tags: string[];
+	/** Kind of work — rendered filled, so it reads apart from the stack. */
+	type?: string;
+	/** Stack or domain, rendered outlined. */
+	tags?: string[];
+	/** Single year, or a range for things with duration worth showing. */
 	year: string;
 	href?: string;
 	/** The first row carries the heavier rule, matching the design. */
 	first?: boolean;
 }
 
-const { index, title, summary, tags, year, href, first = false } = Astro.props;
+const {
+	index,
+	title,
+	summary,
+	type,
+	tags = [],
+	year,
+	href,
+	first = false,
+} = Astro.props;
+
 const Tag = href ? 'a' : 'div';
 ---
 
@@ -35,6 +49,13 @@ const Tag = href ? 'a' : 'div';
 	</div>
 
 	<div class="flex flex-wrap gap-1.5 lg:mt-0">
+		{
+			type && (
+				<span class="bg-ink px-[7px] py-[3px] text-micro tracking-wide text-page uppercase">
+					{type}
+				</span>
+			)
+		}
 		{
 			tags.map((tag) => (
 				<span class="border border-rule px-[7px] py-[3px] text-micro tracking-wide text-ink-muted uppercase">
