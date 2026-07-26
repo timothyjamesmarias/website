@@ -5,9 +5,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-	);
+	// Drafts get a page in dev so they can be previewed, but never build into
+	// production. Listings filter drafts out in both, so they stay unlinked.
+	const posts = (
+		await getCollection('blog', ({ data }) => !data.draft || import.meta.env.DEV)
+	).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 	return posts.map((post, i) => ({
 		params: { slug: post.id },
@@ -35,7 +37,9 @@ const stamp = (date: Date) =>
 		.reverse()
 		.join('.');
 
-const toc = headings.filter((h) => h.depth === 2);
+// h1 is the post title, rendered separately; h4 and below are too granular to
+// navigate by. h3 is indented under its parent h2.
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
@@ -68,15 +72,35 @@ const toc = headings.filter((h) => h.depth === 2);
 				}
 			</div>
 
+		</div>
+
+		{/*
+			The ToC sits in this grid rather than the header's so it can stick for
+			the length of the article — sticky only tracks within its own
+			containing block, and the header grid ends before the body begins.
+			`items-start` keeps the aside from stretching to the row height, which
+			would leave it nothing to travel through.
+		*/}
+		<div
+			class="grid grid-cols-1 items-start px-6 md:grid-cols-[96px_1fr] md:gap-x-8 md:px-18 lg:grid-cols-[96px_1fr_300px]"
+		>
+			<div></div>
+			<Prose>
+				<Content />
+			</Prose>
+
 			{
 				toc.length > 0 && (
-					<aside class="hidden lg:block">
-						<div class="eyebrow pt-2">Contents</div>
+					<aside class="sticky top-8 hidden max-h-[calc(100vh-4rem)] overflow-y-auto lg:block">
+						<div class="eyebrow">Contents</div>
 						<nav class="mt-4 flex flex-col gap-2">
 							{toc.map((heading) => (
 								<a
 									href={`#${heading.slug}`}
-									class="text-caption leading-snug text-ink-muted no-underline transition-colors hover:text-accent"
+									class:list={[
+										'text-caption leading-snug no-underline transition-colors hover:text-accent',
+										heading.depth === 3 ? 'pl-3 text-ink-faint' : 'text-ink-muted',
+									]}
 								>
 									{heading.text}
 								</a>
@@ -85,15 +109,6 @@ const toc = headings.filter((h) => h.depth === 2);
 					</aside>
 				)
 			}
-		</div>
-
-		<div
-			class="grid grid-cols-1 px-6 md:grid-cols-[96px_1fr] md:gap-x-8 md:px-18 lg:grid-cols-[96px_1fr_300px]"
-		>
-			<div></div>
-			<Prose>
-				<Content />
-			</Prose>
 		</div>
 
 		{
