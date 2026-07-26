@@ -29,6 +29,26 @@ jobs:
 
       - run: npm ci
 
+      # Mermaid diagrams are rendered to SVG at build time, which needs a real
+      # browser to measure text. Only Chromium is installed, and it is cached
+      # against the resolved Playwright version so it is downloaded once.
+      - id: playwright-version
+        run: echo "version=$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - id: playwright-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      - if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      # The cached browser skips the download but not the apt packages it links
+      # against, which are not part of the runner image.
+      - if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
       - run: npm run build
 
       - uses: actions/upload-pages-artifact@v5
