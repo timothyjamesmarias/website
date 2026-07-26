@@ -5,24 +5,54 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const stamp = (date: Date) =>
+	date
+		.toLocaleDateString('en-GB', {
+			year: '2-digit',
+			month: '2-digit',
+			day: '2-digit',
+			timeZone: 'UTC',
+		})
+		.split('/')
+		.reverse()
+		.join('.');
 ---
 
-<BaseLayout title="Blog">
-	<ul>
+<BaseLayout title="Notes" description="Writing by Timothy Marias.">
+	<section class="px-6 pt-16 md:px-18">
+		<h1 class="eyebrow">02 / Notes</h1>
+
 		{
-			posts.map((post) => (
-				<li>
-					<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-					<time datetime={post.data.pubDate.toISOString()}>
-						{post.data.pubDate.toLocaleDateString('en-US', {
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
-							timeZone: 'UTC',
-						})}
-					</time>
-				</li>
-			))
+			posts.length === 0 ? (
+				<p class="mt-8 text-body text-ink-muted">Nothing published yet.</p>
+			) : (
+				<ul class="mt-8 border-t border-rule">
+					{posts.map((post) => (
+						<li class="border-b border-rule">
+							<a
+								href={`/blog/${post.id}/`}
+								class="group grid grid-cols-1 gap-x-8 gap-y-2 py-6 no-underline md:grid-cols-[96px_1fr]"
+							>
+								<time
+									datetime={post.data.pubDate.toISOString()}
+									class="eyebrow pt-1 font-mono"
+								>
+									{stamp(post.data.pubDate)}
+								</time>
+								<div>
+									<h2 class="max-w-[620px] text-lead leading-snug font-bold tracking-tight text-ink transition-colors group-hover:text-accent text-pretty">
+										{post.data.title}
+									</h2>
+									<p class="mt-2 max-w-[620px] text-small leading-normal text-ink-muted">
+										{post.data.description}
+									</p>
+								</div>
+							</a>
+						</li>
+					))}
+				</ul>
+			)
 		}
-	</ul>
+	</section>
 </BaseLayout>

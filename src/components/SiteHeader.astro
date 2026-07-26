@@ -1,0 +1,39 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const links = [
+	{ href: '/', label: 'Index' },
+	{ href: '/blog/', label: 'Notes' },
+	{ href: '/contact/', label: 'Contact' },
+];
+
+const path = Astro.url.pathname;
+---
+
+<div
+	class="flex items-center justify-between border-b-2 border-rule-strong px-6 py-5 md:px-18"
+>
+	<a href="/" class="flex items-center gap-3 no-underline">
+		<span class="size-2.5 shrink-0 bg-accent"></span>
+		<span
+			class="text-small font-bold tracking-[0.02em] text-ink uppercase"
+		>
+			Timothy Marias
+		</span>
+	</a>
+
+	<nav class="flex items-center gap-7">
+		{
+			links.map((link) => (
+				<a
+					href={link.href}
+					aria-current={path === link.href ? 'page' : undefined}
+					class="text-caption tracking-wider text-ink-muted uppercase no-underline transition-colors hover:text-ink aria-[current=page]:text-ink"
+				>
+					{link.label}
+				</a>
+			))
+		}
+		<ThemeToggle />
+	</nav>
+</div>

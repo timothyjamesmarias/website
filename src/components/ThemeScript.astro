@@ -1,0 +1,14 @@
+---
+// Inlined and run before first paint so the stored theme applies without a
+// flash of the wrong palette.
+---
+
+<script is:inline>
+	(() => {
+		const stored = localStorage.getItem('theme');
+		const theme =
+			stored ??
+			(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+		document.documentElement.dataset.theme = theme;
+	})();
+</script>

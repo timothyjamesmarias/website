@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ThemeScript from '../components/ThemeScript.astro';
 
 interface Props {
 	title: string;
@@ -16,16 +19,19 @@ const { title, description } = Astro.props;
 		<title>{title}</title>
 		{description && <meta name="description" content={description} />}
 		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+		<ThemeScript />
 	</head>
-	<body>
-		<header>
-			<slot name="header" />
-		</header>
-		<main>
-			<slot />
-		</main>
-		<footer>
-			<slot name="footer" />
-		</footer>
+	<body class="bg-page text-ink">
+		<div class="mx-auto min-h-screen max-w-[1280px]">
+			<header>
+				<SiteHeader />
+			</header>
+			<main>
+				<slot />
+			</main>
+			<footer>
+				<SiteFooter />
+			</footer>
+		</div>
 	</body>
 </html>

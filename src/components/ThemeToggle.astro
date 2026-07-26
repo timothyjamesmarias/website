@@ -1,0 +1,32 @@
+---
+---
+
+<button
+	type="button"
+	data-theme-toggle
+	aria-label="Toggle color theme"
+	class="eyebrow cursor-pointer bg-transparent text-ink-muted transition-colors hover:text-ink"
+>
+	<span data-theme-label>Dark</span>
+</button>
+
+<script>
+	const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+	const label = document.querySelector<HTMLElement>('[data-theme-label]');
+
+	const sync = () => {
+		const isDark = document.documentElement.dataset.theme === 'dark';
+		if (label) label.textContent = isDark ? 'Light' : 'Dark';
+		button?.setAttribute('aria-pressed', String(isDark));
+	};
+
+	button?.addEventListener('click', () => {
+		const next =
+			document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+		document.documentElement.dataset.theme = next;
+		localStorage.setItem('theme', next);
+		sync();
+	});
+
+	sync();
+</script>

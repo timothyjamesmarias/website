@@ -2,32 +2,125 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Prose from '../../components/Prose.astro';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const posts = await getCollection('blog', ({ data }) => !data.draft);
-	return posts.map((post) => ({
+	const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+	);
+
+	return posts.map((post, i) => ({
 		params: { slug: post.id },
-		props: { post },
+		props: {
+			post,
+			// Sorted newest-first, so the next-older post sits at i + 1.
+			newer: posts[i - 1] ?? null,
+			older: posts[i + 1] ?? null,
+		},
 	}));
 };
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
+
+const stamp = (date: Date) =>
+	date
+		.toLocaleDateString('en-GB', {
+			year: '2-digit',
+			month: '2-digit',
+			day: '2-digit',
+			timeZone: 'UTC',
+		})
+		.split('/')
+		.reverse()
+		.join('.');
+
+const toc = headings.filter((h) => h.depth === 2);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
 	<article>
-		<h1>{post.data.title}</h1>
-		<time datetime={post.data.pubDate.toISOString()}>
+		<div
+			class="grid grid-cols-1 gap-y-8 px-6 pt-16 pb-12 md:grid-cols-[96px_1fr] md:gap-x-8 md:px-18 lg:grid-cols-[96px_1fr_300px]"
+		>
+			<div class="eyebrow pt-2 font-mono">
+				<time datetime={post.data.pubDate.toISOString()}>
+					{stamp(post.data.pubDate)}
+				</time>
+			</div>
+
+			<div>
+				<h1
+					class="max-w-[620px] text-[2rem] leading-title font-bold tracking-display text-pretty sm:text-title"
+				>
+					{post.data.title}
+				</h1>
+				{
+					post.data.tags.length > 0 && (
+						<div class="mt-4 flex flex-wrap gap-2">
+							{post.data.tags.map((tag) => (
+								<span class="border border-rule px-2.5 py-1 text-micro tracking-wider text-ink-muted uppercase">
+									{tag}
+								</span>
+							))}
+						</div>
+					)
+				}
+			</div>
+
 			{
-				post.data.pubDate.toLocaleDateString('en-US', {
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric',
-					timeZone: 'UTC',
-				})
+				toc.length > 0 && (
+					<aside class="hidden lg:block">
+						<div class="eyebrow pt-2">Contents</div>
+						<nav class="mt-4 flex flex-col gap-2">
+							{toc.map((heading) => (
+								<a
+									href={`#${heading.slug}`}
+									class="text-caption leading-snug text-ink-muted no-underline transition-colors hover:text-accent"
+								>
+									{heading.text}
+								</a>
+							))}
+						</nav>
+					</aside>
+				)
 			}
-		</time>
-		<Content />
+		</div>
+
+		<div
+			class="grid grid-cols-1 px-6 md:grid-cols-[96px_1fr] md:gap-x-8 md:px-18 lg:grid-cols-[96px_1fr_300px]"
+		>
+			<div></div>
+			<Prose>
+				<Content />
+			</Prose>
+		</div>
+
+		{
+			(newer || older) && (
+				<nav class="mt-20 grid grid-cols-1 gap-6 border-t border-rule px-6 pt-8 sm:grid-cols-2 md:px-18">
+					<div>
+						{older && (
+							<a href={`/blog/${older.id}/`} class="group no-underline">
+								<span class="eyebrow block">Previous</span>
+								<span class="mt-2 block text-small leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+									&larr; {older.data.title}
+								</span>
+							</a>
+						)}
+					</div>
+					<div class="sm:text-right">
+						{newer && (
+							<a href={`/blog/${newer.id}/`} class="group no-underline">
+								<span class="eyebrow block">Next</span>
+								<span class="mt-2 block text-small leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+									{newer.data.title} &rarr;
+								</span>
+							</a>
+						)}
+					</div>
+				</nav>
+			)
+		}
 	</article>
 </BaseLayout>
