@@ -1,0 +1,22 @@
+---
+interface Props {
+	index: string;
+	label: string;
+	/** Hairline above the section; the first section on a page omits it. */
+	divided?: boolean;
+}
+
+const { index, label, divided = true } = Astro.props;
+---
+
+<section
+	class:list={[
+		'grid grid-cols-1 gap-x-8 gap-y-6 px-6 pb-14 md:grid-cols-[96px_1fr] md:px-18',
+		divided && 'border-t border-rule pt-8',
+	]}
+>
+	<h2 class="eyebrow">{index} / {label}</h2>
+	<div>
+		<slot />
+	</div>
+</section>

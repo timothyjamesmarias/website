@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Placeholder content — replace with real copy.
+const channels = [
+	{ label: 'Email', value: 'tim@timothymarias.com', href: 'mailto:tim@timothymarias.com' },
+	{ label: 'GitHub', value: 'timothyjamesmarias', href: 'https://github.com/timothyjamesmarias' },
+	{ label: 'Location', value: 'Lorem, IP' },
+	{ label: 'Reply time', value: '~2 days' },
+];
+---
+
+<BaseLayout
+	title="Contact"
+	description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+>
+	<div
+		class="grid grid-cols-1 gap-x-8 gap-y-8 px-6 pt-16 pb-14 md:grid-cols-[96px_1fr] md:px-18"
+	>
+		<h1 class="eyebrow pt-2">03 / Contact</h1>
+
+		<div>
+			<p
+				class="max-w-[620px] text-[2rem] leading-title font-bold tracking-display text-pretty sm:text-title"
+			>
+				Lorem ipsum dolor sit amet consectetur.
+			</p>
+			<p class="mt-5 max-w-[460px] text-[0.9375rem] leading-normal text-ink-muted">
+				Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+				accusantium doloremque laudantium, totam rem aperiam.
+			</p>
+
+			<dl class="mt-10 max-w-[460px]">
+				{
+					channels.map((channel, i) => (
+						<div
+							class:list={[
+								'flex justify-between gap-6 py-3 text-caption',
+								i === 0
+									? 'border-t border-rule-strong'
+									: 'border-t border-rule',
+							]}
+						>
+							<dt class="text-mini tracking-widest text-ink-faint uppercase">
+								{channel.label}
+							</dt>
+							<dd class="text-ink">
+								{channel.href ? (
+									<a
+										href={channel.href}
+										class="text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
+									>
+										{channel.value}
+									</a>
+								) : (
+									channel.value
+								)}
+							</dd>
+						</div>
+					))
+				}
+			</dl>
+		</div>
+	</div>
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+interface Props {
+	index: string;
+	title: string;
+	summary: string;
+	tags: string[];
+	year: string;
+	href?: string;
+	/** The first row carries the heavier rule, matching the design. */
+	first?: boolean;
+}
+
+const { index, title, summary, tags, year, href, first = false } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+	href={href}
+	class:list={[
+		'group grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px] no-underline sm:grid-cols-[40px_1fr] lg:grid-cols-[40px_1fr_240px_90px]',
+		first ? 'border-t border-rule-strong' : 'border-t border-rule',
+	]}
+>
+	<span class="eyebrow font-mono">{index}</span>
+
+	<div>
+		<h3
+			class="text-[1.125rem] font-bold tracking-tight text-ink transition-colors group-hover:text-accent"
+		>
+			{title}
+		</h3>
+		<p class="mt-[5px] max-w-[420px] text-small leading-normal text-ink-muted">
+			{summary}
+		</p>
+	</div>
+
+	<div class="flex flex-wrap gap-1.5 lg:mt-0">
+		{
+			tags.map((tag) => (
+				<span class="border border-rule px-[7px] py-[3px] text-micro tracking-wide text-ink-muted uppercase">
+					{tag}
+				</span>
+			))
+		}
+	</div>
+
+	<span class="text-mini text-ink-faint lg:text-right">
+		{year}{href && <span class="ml-1">&rarr;</span>}
+	</span>
+</Tag>

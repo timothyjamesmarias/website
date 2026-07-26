@@ -1,6 +1,190 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import WorkRow from '../components/WorkRow.astro';
+
+// Placeholder content — replace with real copy.
+const status = [
+	{ label: 'Location', value: 'Lorem, IP' },
+	{ label: 'Timezone', value: 'UTC−6' },
+	{ label: 'Contract', value: 'Open' },
+	{ label: 'Reply time', value: '~2 days' },
+];
+
+const work = [
+	{
+		index: '001',
+		title: 'Lorem ipsum dolor',
+		summary:
+			'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		tags: ['Lorem', 'Ipsum', 'Dolor'],
+		year: '2025',
+	},
+	{
+		index: '002',
+		title: 'Sit amet consectetur',
+		summary:
+			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+		tags: ['Sit', 'Amet'],
+		year: '2024',
+	},
+	{
+		index: '003',
+		title: 'Duis aute irure',
+		summary:
+			'Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+		tags: ['Duis'],
+		year: '2023',
+	},
+	{
+		index: '004',
+		title: 'Excepteur sint occaecat',
+		summary:
+			'Cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+		tags: ['Excepteur', 'Sint'],
+		year: '2022',
+	},
+];
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4);
+
+const stamp = (date: Date) =>
+	date
+		.toLocaleDateString('en-GB', {
+			year: '2-digit',
+			month: '2-digit',
+			day: '2-digit',
+			timeZone: 'UTC',
+		})
+		.split('/')
+		.reverse()
+		.join('.');
 ---
 
-<BaseLayout title="Timothy Marias">
+<BaseLayout
+	title="Timothy Marias"
+	description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+>
+	<div
+		class="grid grid-cols-1 gap-x-8 gap-y-10 px-6 pt-16 pb-14 md:grid-cols-[96px_1fr] md:px-18 lg:grid-cols-[96px_1fr_300px]"
+	>
+		<h1 class="eyebrow pt-2.5">00 / Now</h1>
+
+		<div>
+			<p
+				class="max-w-[620px] text-[2.25rem] leading-display font-bold tracking-tightest text-pretty sm:text-display"
+			>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+			</p>
+			<p class="mt-[22px] max-w-[460px] text-[0.9375rem] leading-normal text-ink-muted">
+				Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+				reprehenderit in voluptate velit.
+			</p>
+
+			<div class="mt-7 flex flex-wrap gap-3">
+				<a
+					href="/contact/"
+					class="bg-accent px-5 py-[11px] text-caption font-bold tracking-wide text-white uppercase no-underline transition-opacity hover:opacity-85"
+				>
+					Get in touch
+				</a>
+				<a
+					href="#"
+					class="border border-rule-strong px-5 py-[11px] text-caption font-bold tracking-wide text-ink uppercase no-underline transition-colors hover:bg-ink hover:text-page"
+				>
+					Résumé (PDF)
+				</a>
+			</div>
+		</div>
+
+		<aside class="flex flex-col gap-3.5 lg:border-l lg:border-rule lg:pl-6">
+			<span class="text-micro tracking-[0.1em] text-ink-faint uppercase">
+				Status
+			</span>
+			{
+				status.map((row, i) => (
+					<div
+						class:list={[
+							'flex justify-between text-caption',
+							i < status.length - 1 && 'border-b border-rule pb-2',
+						]}
+					>
+						<span class="text-ink-faint">{row.label}</span>
+						<span class="text-ink">{row.value}</span>
+					</div>
+				))
+			}
+		</aside>
+	</div>
+
+	<Section index="01" label="Work">
+		<div>
+			{work.map((item, i) => <WorkRow {...item} first={i === 0} />)}
+		</div>
+	</Section>
+
+	<Section index="02" label="Notes">
+		{
+			posts.length === 0 ? (
+				<p class="text-body text-ink-muted">Nothing published yet.</p>
+			) : (
+				<ul>
+					{posts.map((post, i) => (
+						<li>
+							<a
+								href={`/blog/${post.id}/`}
+								class:list={[
+									'group grid grid-cols-1 items-baseline gap-x-6 gap-y-1 py-[18px] no-underline sm:grid-cols-[90px_1fr]',
+									i === 0
+										? 'border-t border-rule-strong'
+										: 'border-t border-rule',
+								]}
+							>
+								<time
+									datetime={post.data.pubDate.toISOString()}
+									class="eyebrow font-mono"
+								>
+									{stamp(post.data.pubDate)}
+								</time>
+								<span class="max-w-[520px] text-[0.9375rem] leading-snug font-bold tracking-tight text-ink transition-colors group-hover:text-accent">
+									{post.data.title}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			)
+		}
+		<a
+			href="/blog/"
+			class="mt-6 inline-block text-caption tracking-wider text-ink-muted uppercase no-underline transition-colors hover:text-accent"
+		>
+			All notes &rarr;
+		</a>
+	</Section>
+
+	<Section index="03" label="Contact">
+		<p class="max-w-[460px] text-[0.9375rem] leading-normal text-ink-muted">
+			Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+			doloremque laudantium.
+		</p>
+		<div class="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+			<a
+				href="mailto:tim@timothymarias.com"
+				class="text-small text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
+			>
+				tim@timothymarias.com
+			</a>
+			<a
+				href="https://github.com/timothyjamesmarias"
+				class="text-small text-ink underline decoration-accent underline-offset-4 transition-colors hover:text-accent"
+			>
+				GitHub
+			</a>
+		</div>
+	</Section>
 </BaseLayout>

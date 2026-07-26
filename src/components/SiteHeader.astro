@@ -11,18 +11,18 @@ const path = Astro.url.pathname;
 ---
 
 <div
-	class="flex items-center justify-between border-b-2 border-rule-strong px-6 py-5 md:px-18"
+	class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b-2 border-rule-strong px-6 py-5 md:px-18"
 >
 	<a href="/" class="flex items-center gap-3 no-underline">
 		<span class="size-2.5 shrink-0 bg-accent"></span>
 		<span
-			class="text-small font-bold tracking-[0.02em] text-ink uppercase"
+			class="text-small font-bold tracking-[0.02em] whitespace-nowrap text-ink uppercase"
 		>
 			Timothy Marias
 		</span>
 	</a>
 
-	<nav class="flex items-center gap-7">
+	<nav class="flex items-center gap-5 sm:gap-7">
 		{
 			links.map((link) => (
 				<a
