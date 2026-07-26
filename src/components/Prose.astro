@@ -14,6 +14,17 @@
 		line-height: var(--leading-prose);
 		color: var(--color-ink);
 		text-wrap: pretty;
+		/* A bare URL or long identifier is one unbreakable token; without this
+		   it widens the grid track and takes the whole page horizontal. */
+		overflow-wrap: anywhere;
+	}
+
+	/* The usual offenders, stated outright — `anywhere` above only applies
+	   where the browser has no other break opportunity. */
+	.prose :global(a),
+	.prose :global(code) {
+		overflow-wrap: break-word;
+		word-break: break-word;
 	}
 
 	.prose :global(> * + *) {
@@ -134,6 +145,60 @@
 		text-decoration: var(--shiki-dark-text-decoration) !important;
 	}
 
+	/* Diagrams are rendered to SVG at build time. Mermaid bakes its palette in
+	   as inline attributes, so the theme has to be reasserted here — otherwise
+	   a diagram keeps light-mode colors against the dark page. */
+	.prose :global(figure.mermaid) {
+		margin-top: 2em;
+		overflow-x: auto;
+	}
+
+	.prose :global(figure.mermaid svg) {
+		max-width: 100%;
+		height: auto;
+		font-family: var(--font-sans) !important;
+	}
+
+	.prose :global(figure.mermaid .nodeLabel),
+	.prose :global(figure.mermaid .edgeLabel),
+	.prose :global(figure.mermaid .label),
+	.prose :global(figure.mermaid text) {
+		fill: var(--color-ink) !important;
+		color: var(--color-ink) !important;
+		font-family: var(--font-sans) !important;
+	}
+
+	.prose :global(figure.mermaid .node rect),
+	.prose :global(figure.mermaid .node circle),
+	.prose :global(figure.mermaid .node polygon),
+	.prose :global(figure.mermaid .node path) {
+		fill: var(--color-surface-sunken) !important;
+		stroke: var(--color-rule) !important;
+	}
+
+	/* Flowchart edges are .flowchart-link; sequence diagrams use .messageLine*
+	   and plain <line> for lifelines. */
+	.prose :global(figure.mermaid .flowchart-link),
+	.prose :global(figure.mermaid .messageLine0),
+	.prose :global(figure.mermaid .messageLine1),
+	.prose :global(figure.mermaid line) {
+		stroke: var(--color-ink-faint) !important;
+	}
+
+	.prose :global(figure.mermaid .arrowMarkerPath),
+	.prose :global(figure.mermaid marker path) {
+		fill: var(--color-ink-faint) !important;
+		stroke: var(--color-ink-faint) !important;
+	}
+
+	/* Edge labels sit on an opaque plate that would otherwise stay white. */
+	.prose :global(figure.mermaid .edgeLabel rect),
+	.prose :global(figure.mermaid .labelBkg) {
+		fill: var(--color-page) !important;
+		background: var(--color-page) !important;
+		opacity: 1 !important;
+	}
+
 	.prose :global(hr) {
 		border: 0;
 		border-top: 1px solid var(--color-rule);
@@ -146,10 +211,23 @@
 		height: auto;
 	}
 
+	/* Tables can't wrap, so a wide one scrolls in its own box rather than
+	   widening the page. Markdown emits a bare <table> with no wrapper, so the
+	   scroll container has to be the table itself. */
 	.prose :global(table) {
+		display: block;
 		width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
 		border-collapse: collapse;
 		font-size: var(--text-small);
+	}
+
+	/* display:block drops the table's own shrink-wrapping, so cells need to be
+	   told not to wrap or every column collapses to its narrowest word. */
+	.prose :global(th),
+	.prose :global(td) {
+		white-space: nowrap;
 	}
 
 	.prose :global(th) {
