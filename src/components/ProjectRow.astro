@@ -1,4 +1,10 @@
 ---
+export interface ProjectLink {
+	/** Short label — "Repo", "Live", "Docs". */
+	label: string;
+	href: string;
+}
+
 interface Props {
 	index: string;
 	title: string;
@@ -7,30 +13,40 @@ interface Props {
 	tags?: string[];
 	/** Single year, or a range for things with duration worth showing. */
 	year: string;
-	href?: string;
+	/** Zero or more destinations. Nothing linkable renders as "Private". */
+	links?: ProjectLink[];
 	/** The first row carries the heavier rule, matching the design. */
 	first?: boolean;
 }
 
-const { index, title, summary, tags = [], year, href, first = false } =
-	Astro.props;
+const {
+	index,
+	title,
+	summary,
+	tags = [],
+	year,
+	links = [],
+	first = false,
+} = Astro.props;
 
-const Tag = href ? 'a' : 'div';
+// External links get the arrow and a new tab; internal ones stay in place.
+const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
-<Tag
-	href={href}
+{/*
+	A div, not an anchor: rows can carry several destinations now, and links
+	can't nest. The links in the last column are the only click targets.
+*/}
+<div
 	class:list={[
-		'group grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px] no-underline sm:grid-cols-[40px_1fr] lg:grid-cols-[40px_1fr_240px_90px]',
+		'grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px] sm:grid-cols-[40px_1fr] lg:grid-cols-[40px_1fr_190px_200px]',
 		first ? 'border-t border-rule-strong' : 'border-t border-rule',
 	]}
 >
 	<span class="eyebrow font-mono">{index}</span>
 
 	<div>
-		<h3
-			class="text-[1.125rem] font-bold tracking-tight text-ink transition-colors group-hover:text-accent"
-		>
+		<h3 class="text-[1.125rem] font-bold tracking-tight text-ink">
 			{title}
 		</h3>
 		<p class="mt-[5px] max-w-[420px] text-small leading-normal text-ink-muted">
@@ -48,7 +64,31 @@ const Tag = href ? 'a' : 'div';
 		}
 	</div>
 
-	<span class="text-mini text-ink-faint lg:text-right">
-		{year}{href && <span class="ml-1">&rarr;</span>}
-	</span>
-</Tag>
+	<div class="flex flex-col gap-2.5 lg:items-end">
+		<span class="text-mini text-ink-faint">{year}</span>
+		{
+			links.length > 0 ? (
+				<div class="flex flex-wrap gap-3.5">
+					{links.map((link) => (
+						<a
+							href={link.href}
+							target={isExternal(link.href) ? '_blank' : undefined}
+							rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
+							class="flex items-baseline gap-[5px] border-b border-ink pb-[3px] text-micro tracking-wider text-ink uppercase no-underline transition-colors hover:border-accent hover:text-accent"
+						>
+							<span>{link.label}</span>
+							{isExternal(link.href) && (
+								<span class="text-accent">&#8599;</span>
+							)}
+						</a>
+					))}
+				</div>
+			) : (
+				/* Nothing to link to — say so rather than leaving the cell bare. */
+				<span class="text-micro tracking-wider text-ink-faint uppercase">
+					Private
+				</span>
+			)
+		}
+	</div>
+</div>

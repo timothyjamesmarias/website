@@ -12,19 +12,19 @@ const status = [
 ];
 
 // Projects. Current work lives in the hero; the full history lives in the
-// résumé. Omit `href` when there is nothing live to link to — the row then
-// shows a bare year with no arrow.
+// résumé. `links` takes any mix of destinations — repo, live site, docs. Leave
+// it off when there is nothing public, and the row shows "Private" instead.
 const projects = [
 	{
 		index: '001',
 		title: 'Marias Family Archive',
 		summary:
-			'My WIP project to act as an archive for my family\'s genealogy from our primary sources.' +
+			"My WIP project to act as an archive for my family's genealogy from our primary sources." +
 			' Originally built out in Spring Boot with Kotlin, moving it now to Adonis JS. ' +
 			'SSR MPA with TS islands. Self hosted on my NixOS box.',
 		tags: ['Family Archive', 'Typescript', 'Postgres', 'NixOS'],
-		year: '2025-present',
-		href: 'https://mariasfamilyarchive.com'
+		year: '2025—present',
+		links: [{ label: 'Live', href: 'https://mariasfamilyarchive.com' }],
 	},
 ];
 
