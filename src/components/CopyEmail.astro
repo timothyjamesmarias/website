@@ -10,12 +10,17 @@ const { email } = Astro.props;
 	<a href={`mailto:${email}`} class="link">
 		{email}
 	</a>
+	{/*
+		aria-live so the Copy -> Copied swap is announced; the visible word
+		alone is too terse to name the button, hence aria-label.
+	*/}
 	<button
 		type="button"
 		data-copy-email={email}
+		aria-label={`Copy ${email} to clipboard`}
 		class="cursor-pointer bg-transparent text-micro tracking-wider text-ink-faint uppercase transition-colors hover:text-accent"
 	>
-		<span data-copy-label>Copy</span>
+		<span data-copy-label aria-live="polite">Copy</span>
 	</button>
 </span>
 

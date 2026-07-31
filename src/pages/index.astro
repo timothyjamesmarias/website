@@ -81,14 +81,15 @@ const schema = {
 	<div
 		class="grid grid-cols-1 gap-x-8 gap-y-10 px-6 pt-16 pb-14 md:grid-cols-[96px_1fr] md:px-18 lg:grid-cols-[96px_1fr_300px]"
 	>
-		<h1 class="eyebrow pt-2.5">00 / Now</h1>
+		{/* A section marker, not a heading — the page's h1 is the name below. */}
+		<span class="eyebrow pt-2.5">00 / Now</span>
 
 		<div>
-			<p
+			<h1
 				class="max-w-[620px] text-[2.25rem] leading-display font-bold tracking-tightest text-pretty sm:text-display"
 			>
 				Timothy Marias
-			</p>
+			</h1>
 			{/*
 				Current work goes here — the agency, the range of domains it spans,
 				and availability. This is the one place employment is stated, so it
@@ -147,9 +148,16 @@ const schema = {
 	</div>
 
 	<Section index={num()} label="Projects" divided={false}>
-		<div class="border-b border-rule-strong">
-			{projects.map((item, i) => <ProjectRow {...item} first={i === 0} />)}
-		</div>
+		{/* A list, so assistive tech announces how many projects there are. */}
+		<ul class="border-b border-rule-strong">
+			{
+				projects.map((item, i) => (
+					<li>
+						<ProjectRow {...item} first={i === 0} />
+					</li>
+				))
+			}
+		</ul>
 	</Section>
 
 	{
@@ -191,7 +199,12 @@ const schema = {
 		</p>
 		<div class="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-small">
 			<CopyEmail email="tim@timothymarias.com" />
-			<a href="https://github.com/timothyjamesmarias" class="link">
+			<a
+				href="https://github.com/timothyjamesmarias"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="link"
+			>
 				GitHub
 			</a>
 		</div>

@@ -10,15 +10,23 @@ interface Props {
 }
 
 const { index, label, divided = true } = Astro.props;
+
+const id = `section-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 ---
 
+{/*
+	The marker is a span, not a heading — "01 / Projects" is a label, and using
+	it as an h2 made the numbering the document outline. The section is named
+	through aria-labelledby instead, so it still appears in the landmark list.
+*/}
 <section
+	aria-labelledby={id}
 	class:list={[
 		'grid grid-cols-1 gap-x-8 gap-y-6 px-6 pb-14 md:grid-cols-[96px_1fr] md:px-18',
 		divided ? 'border-t border-rule pt-8' : 'pt-8',
 	]}
 >
-	<h2 class="eyebrow">{index} / {label}</h2>
+	<span id={id} class="eyebrow">{index} / {label}</span>
 	<div>
 		<slot />
 	</div>
