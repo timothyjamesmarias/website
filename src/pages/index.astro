@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import ProjectRow from '../components/ProjectRow.astro';
 import CopyEmail from '../components/CopyEmail.astro';
+import { PERSON_ID, WEBSITE_ID } from '../lib/schema';
 
 const status = [
 	{ label: 'Location', value: 'Oregon' },
@@ -55,21 +56,16 @@ const stamp = (date: Date) =>
 		.reverse()
 		.join('.');
 
-// Ties the domain to the person behind it. `sameAs` is the field search
-// engines use to reconcile profiles across sites.
+// The Person itself lives in the site-wide graph. This page is the one that
+// is *about* him, which is what ProfilePage marks — `mainEntity` is the claim
+// that ties the URL to the entity.
 const schema = {
-	'@context': 'https://schema.org',
-	'@type': 'Person',
+	'@type': 'ProfilePage',
+	'@id': 'https://timothymarias.com/#profilepage',
+	url: 'https://timothymarias.com/',
 	name: 'Timothy Marias',
-	url: 'https://timothymarias.com',
-	jobTitle: 'Full stack software developer',
-	email: 'mailto:tim@timothymarias.com',
-	address: {
-		'@type': 'PostalAddress',
-		addressRegion: 'Oregon',
-		addressCountry: 'US',
-	},
-	sameAs: ['https://github.com/timothyjamesmarias'],
+	isPartOf: { '@id': WEBSITE_ID },
+	mainEntity: { '@id': PERSON_ID },
 };
 ---
 

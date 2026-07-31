@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ThemeScript from '../components/ThemeScript.astro';
 import SiteMeta from '../components/SiteMeta.astro';
+import { graph } from '../lib/schema';
 
 interface Props {
 	title: string;
@@ -12,11 +13,17 @@ interface Props {
 	publishedTime?: Date;
 	modifiedTime?: Date;
 	image?: string;
-	/** Structured data for this page, serialised into a JSON-LD script. */
+	/**
+	 * This page's own structured data node — a BlogPosting, a ProfilePage.
+	 * Merged into the site's identity graph rather than replacing it, so the
+	 * Person and WebSite nodes are emitted on every page either way.
+	 */
 	schema?: Record<string, unknown>;
 }
 
 const { schema, ...meta } = Astro.props;
+
+const jsonLd = schema ? graph(schema) : graph();
 ---
 
 <html lang="en">
@@ -24,14 +31,7 @@ const { schema, ...meta } = Astro.props;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<SiteMeta {...meta} />
-		{
-			schema && (
-				<script
-					type="application/ld+json"
-					set:html={JSON.stringify(schema)}
-				/>
-			)
-		}
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 		<ThemeScript />
 	</head>
 	<body class="bg-page text-ink">
