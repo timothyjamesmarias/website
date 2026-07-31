@@ -17,28 +17,14 @@ const status = [
 const projects = [
 	{
 		index: '001',
-		title: 'Lorem ipsum dolor',
+		title: 'Marias Family Archive',
 		summary:
-			'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		tags: ['Lorem', 'Ipsum'],
-		year: '2019—2021',
-	},
-	{
-		index: '002',
-		title: 'Sit amet consectetur',
-		summary:
-			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
-		tags: ['Sit', 'Amet'],
-		year: '2024',
-		href: 'https://github.com/timothyjamesmarias',
-	},
-	{
-		index: '003',
-		title: 'Duis aute irure',
-		summary:
-			'Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-		tags: ['Duis'],
-		year: '2023',
+			'My WIP project to act as an archive for my family\'s genealogy from our primary sources.' +
+			' Originally built out in Spring Boot with Kotlin, moving it now to Adonis JS. ' +
+			'SSR MPA with TS islands. Self hosted on my NixOS box.',
+		tags: ['Family Archive', 'Typescript', 'Postgres', 'NixOS'],
+		year: '2025-present',
+		href: 'https://mariasfamilyarchive.com'
 	},
 ];
 
@@ -68,7 +54,7 @@ const stamp = (date: Date) =>
 
 <BaseLayout
 	title="Timothy Marias"
-	description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+	description="Timothy Marias — full stack software developer in Oregon."
 >
 	<div
 		class="grid grid-cols-1 gap-x-8 gap-y-10 px-6 pt-16 pb-14 md:grid-cols-[96px_1fr] md:px-18 lg:grid-cols-[96px_1fr_300px]"
@@ -179,8 +165,7 @@ const stamp = (date: Date) =>
 
 	<Section index={num()} label="Contact">
 		<p class="max-w-[460px] text-[0.9375rem] leading-normal text-ink-muted">
-			Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-			doloremque laudantium.
+			Email is the best way to reach me.
 		</p>
 		<div class="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-small">
 			<CopyEmail email="tim@timothymarias.com" />

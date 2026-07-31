@@ -22,11 +22,13 @@ const { title, description } = Astro.props;
 		<ThemeScript />
 	</head>
 	<body class="bg-page text-ink">
-		<div class="mx-auto min-h-screen max-w-[1280px]">
+		<div class="mx-auto flex min-h-screen max-w-[1280px] flex-col">
 			<header>
 				<SiteHeader />
 			</header>
-			<main>
+			{/* Absorbs the slack on short pages so the footer never floats
+			    mid-viewport, while still scrolling normally on long ones. */}
+			<main class="flex-1">
 				<slot />
 			</main>
 			<footer>
