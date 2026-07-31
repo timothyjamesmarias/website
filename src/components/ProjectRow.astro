@@ -39,13 +39,21 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 */}
 <div
 	class:list={[
-		'grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px] sm:grid-cols-[40px_1fr] lg:grid-cols-[40px_1fr_190px_200px]',
+		/*
+			Three layouts, not two. Below sm everything stacks. From sm to lg the
+			title spans both content columns and tags/meta sit side by side
+			beneath it — without that middle step they collide in one column.
+			At lg the design's four-column row takes over.
+		*/
+		'grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px]',
+		'sm:grid-cols-[40px_1fr_auto] lg:grid-cols-[40px_1fr_190px_200px]',
 		first ? 'border-t border-rule-strong' : 'border-t border-rule',
 	]}
 >
 	<span class="eyebrow font-mono">{index}</span>
 
-	<div>
+	{/* Spans tags + meta between sm and lg; back to one column at lg. */}
+	<div class="sm:col-span-2 lg:col-span-1">
 		<h3 class="text-[1.125rem] font-bold tracking-tight text-ink">
 			{title}
 		</h3>
@@ -54,7 +62,8 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 		</p>
 	</div>
 
-	<div class="flex flex-wrap gap-1.5 lg:mt-0">
+	{/* Starts a fresh row under the title until the lg layout has a slot for it. */}
+	<div class="flex flex-wrap gap-1.5 sm:col-start-2 lg:col-start-auto">
 		{
 			tags.map((tag) => (
 				<span class="border border-rule px-[7px] py-[3px] text-micro tracking-wide text-ink-muted uppercase">
