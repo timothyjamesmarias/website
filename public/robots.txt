@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://timothymarias.com/sitemap-index.xml

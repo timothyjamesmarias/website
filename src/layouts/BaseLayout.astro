@@ -3,22 +3,35 @@ import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ThemeScript from '../components/ThemeScript.astro';
+import SiteMeta from '../components/SiteMeta.astro';
 
 interface Props {
 	title: string;
 	description?: string;
+	type?: 'website' | 'article';
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	image?: string;
+	/** Structured data for this page, serialised into a JSON-LD script. */
+	schema?: Record<string, unknown>;
 }
 
-const { title, description } = Astro.props;
+const { schema, ...meta } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<title>{title}</title>
-		{description && <meta name="description" content={description} />}
-		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+		<SiteMeta {...meta} />
+		{
+			schema && (
+				<script
+					type="application/ld+json"
+					set:html={JSON.stringify(schema)}
+				/>
+			)
+		}
 		<ThemeScript />
 	</head>
 	<body class="bg-page text-ink">

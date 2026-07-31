@@ -54,11 +54,30 @@ const stamp = (date: Date) =>
 		.split('/')
 		.reverse()
 		.join('.');
+
+// Ties the domain to the person behind it. `sameAs` is the field search
+// engines use to reconcile profiles across sites.
+const schema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: 'Timothy Marias',
+	url: 'https://timothymarias.com',
+	jobTitle: 'Full stack software developer',
+	email: 'mailto:tim@timothymarias.com',
+	address: {
+		'@type': 'PostalAddress',
+		addressRegion: 'Oregon',
+		addressCountry: 'US',
+	},
+	worksFor: { '@type': 'Organization', name: 'By the Pixel' },
+	sameAs: ['https://github.com/timothyjamesmarias'],
+};
 ---
 
 <BaseLayout
 	title="Timothy Marias"
 	description="Timothy Marias — full stack software developer in Oregon."
+	schema={schema}
 >
 	<div
 		class="grid grid-cols-1 gap-x-8 gap-y-10 px-6 pt-16 pb-14 md:grid-cols-[96px_1fr] md:px-18 lg:grid-cols-[96px_1fr_300px]"

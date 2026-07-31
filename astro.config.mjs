@@ -3,12 +3,14 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import { satteri } from '@astrojs/markdown-satteri';
+import sitemap from '@astrojs/sitemap';
 
 import { mermaidPlugin } from './src/plugins/mermaid.mjs';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://timothymarias.com',
+  integrations: [sitemap()],
   markdown: {
     // Sätteri is the default processor; naming it explicitly is what allows
     // mdast plugins to be added. Mermaid blocks become SVG at build time.
