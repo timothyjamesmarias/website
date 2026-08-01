@@ -31,6 +31,18 @@ const projects = [
 			{ label: 'Old', href: 'https://github.com/timothyjamesmarias/familyArchiveV1' }
 		],
 	},
+	{
+		index: '002',
+		title: 'Caelus',
+		summary: "A routing architecture library for being able to expose a program's API across multiple surfaces: keybindings and overrides, CLI, MCP, and web. " +
+			"Originally prototyped as a Kotlin Multiplatform Library, I'm in the process of porting this to TypeScript to be able to provide better web support.",
+		tags: ['Caelus', 'Typescript', 'Cross-platform'],
+		year: '2026—present',
+		links: [
+			{ label: 'Repo', href: 'https://github.com/ufo-soft/caelus' },
+			{ label: 'Old', href: 'https://github.com/ufo-soft/caelus-old' }
+		],
+	},
 ];
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
