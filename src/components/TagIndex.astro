@@ -1,0 +1,289 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { allPosts } from '../lib/posts';
+import { projects } from '../lib/projects';
+import {
+	TAGS,
+	TAG_KEYS,
+	TAG_SORTS,
+	sortHref,
+	tagHref,
+	type TagKey,
+	type TagStats,
+} from '../lib/tags';
+import { WEBSITE_ID } from '../lib/schema';
+
+/**
+ * The tag index. One component behind three routes — /tags/, /tags/a-z/ and
+ * /tags/recent/ — because a static build can precompute every ordering, so
+ * the sort control is three links rather than a script. See TAG_SORTS.
+ */
+
+interface Props {
+	/** Which of TAG_SORTS this route renders. */
+	segment: string;
+}
+
+const { segment } = Astro.props;
+
+const sort = TAG_SORTS.find((s) => s.segment === segment)!;
+const isDefault = segment === '';
+
+const posts = await allPosts();
+
+const stats = new Map<TagKey, TagStats>(
+	TAG_KEYS.map((key) => [
+		key,
+		{ key, posts: 0, projects: 0, weight: 0, latest: null },
+	]),
+);
+
+for (const post of posts) {
+	for (const key of post.data.tags) {
+		const row = stats.get(key)!;
+		row.posts += 1;
+		row.weight += 1;
+		// allPosts() is newest-first, so the first one seen is the latest.
+		row.latest ??= post.data.pubDate;
+	}
+}
+for (const project of projects) {
+	for (const key of project.tags ?? []) {
+		const row = stats.get(key)!;
+		row.projects += 1;
+		row.weight += 1;
+	}
+}
+
+// A tag in the registry with nothing pointing at it isn't worth a row. Its
+// page still builds; it just isn't reachable by browsing.
+const used = [...stats.values()].filter((row) => row.weight > 0);
+const ranked = [...used].sort(sort.compare);
+
+/*
+	Single-entry tags collapse into one chip row, but only under Weight — that
+	view is about relative mass, and a long tail of ones drowns out the tags
+	carrying the site. A–Z and Recent are lookup views: collapsing there would
+	hide half the alphabet, so every tag gets a full row.
+*/
+const listed = isDefault ? ranked.filter((row) => row.weight > 1) : ranked;
+const tail = isDefault ? ranked.filter((row) => row.weight === 1) : [];
+
+// Bar width is relative to the heaviest tag, so the column always uses its
+// full extent regardless of how many notes exist.
+const heaviest = Math.max(1, ...ranked.map((row) => row.weight));
+const barPercent = (weight: number) =>
+	Math.max(8, Math.round((weight / heaviest) * 100));
+
+const totalPosts = posts.length;
+const totalProjects = projects.length;
+
+const stamp = (date: Date) =>
+	date
+		.toLocaleDateString('en-GB', {
+			year: '2-digit',
+			month: '2-digit',
+			day: '2-digit',
+			timeZone: 'UTC',
+		})
+		.split('/')
+		.reverse()
+		.join('.');
+
+const canonical = new URL('/tags/', Astro.site).href;
+
+// All three orderings are the same collection, so they share one canonical
+// URL — the sorted variants exist for readers, not as separate documents.
+const schema = {
+	'@type': 'CollectionPage',
+	'@id': `${canonical}#page`,
+	url: canonical,
+	name: 'Tags',
+	description: 'Everything on this site, by subject.',
+	isPartOf: { '@id': WEBSITE_ID },
+	mainEntity: {
+		'@type': 'ItemList',
+		numberOfItems: ranked.length,
+		itemListElement: ranked.map((row, i) => ({
+			'@type': 'ListItem',
+			position: i + 1,
+			url: new URL(tagHref(row.key), Astro.site).href,
+			name: TAGS[row.key].label,
+		})),
+	},
+};
+---
+
+<BaseLayout
+	title={isDefault ? 'Tags' : `Tags — ${sort.label}`}
+	description="Everything on this site, by subject."
+	image="/og/tags.png"
+	canonical={isDefault ? undefined : canonical}
+	schema={schema}
+>
+	<nav
+		aria-label="Breadcrumb"
+		class="flex items-baseline gap-2.5 border-b border-rule px-6 py-5 text-mini tracking-wider uppercase md:px-18"
+	>
+		<a href="/blog/" class="text-ink-faint no-underline hover:text-ink">Notes</a>
+		<span class="text-ink-faint" aria-hidden="true">/</span>
+		<span class="text-ink" aria-current="page">Tags</span>
+	</nav>
+
+	<div
+		class="grid grid-cols-1 gap-x-8 gap-y-10 px-6 pt-14 pb-10 md:grid-cols-[96px_1fr] md:px-18 lg:grid-cols-[96px_1fr_300px]"
+	>
+		<span class="eyebrow pt-2.5">Index</span>
+
+		<div>
+			<h1
+				class="max-w-[620px] text-[2.25rem] leading-display font-bold tracking-tightest text-pretty sm:text-[2.875rem]"
+			>
+				Everything, by subject
+			</h1>
+			<p
+				class="mt-[18px] max-w-[480px] text-[0.9375rem] leading-normal text-ink-muted"
+			>
+				{ranked.length}
+				{ranked.length === 1 ? ' tag' : ' tags'} across {totalPosts}
+				{totalPosts === 1 ? ' note' : ' notes'} and {totalProjects}
+				{totalProjects === 1 ? ' project' : ' projects'}.{' '}
+				{
+					isDefault
+						? 'Sorted by weight — the ones I keep returning to sit at the top.'
+						: sort.segment === 'a-z'
+							? 'Sorted alphabetically.'
+							: 'Sorted by most recent note.'
+				}
+			</p>
+		</div>
+
+		{/*
+			Three links, not a control that needs scripting — each ordering is
+			its own pre-built page. `aria-current` marks the active one for
+			assistive tech, since the fill alone only reads visually.
+		*/}
+		<nav
+			aria-label="Sort order"
+			class="flex flex-col gap-3 lg:border-l lg:border-rule lg:pl-6"
+		>
+			<span class="text-micro tracking-[0.1em] text-ink-faint uppercase">
+				Sort
+			</span>
+			<div class="flex flex-wrap gap-1.5">
+				{
+					TAG_SORTS.map((option) => {
+						const active = option.segment === segment;
+						return (
+							<a
+								href={sortHref(option.segment)}
+								aria-current={active ? 'page' : undefined}
+								class:list={[
+									'px-2.5 py-[5px] text-micro tracking-wider uppercase no-underline transition-colors',
+									active
+										? 'border border-rule-strong bg-rule-strong text-page'
+										: 'border border-rule text-ink-muted hover:border-accent hover:text-accent',
+								]}
+							>
+								{option.label}
+							</a>
+						);
+					})
+				}
+			</div>
+		</nav>
+	</div>
+
+	<section
+		class="grid grid-cols-1 gap-x-8 px-6 pb-16 md:grid-cols-[96px_1fr] md:px-18"
+	>
+		<h2 class="eyebrow pb-4 md:pb-0">
+			{ranked.length}{ranked.length === 1 ? ' tag' : ' tags'}
+		</h2>
+
+		{
+			ranked.length === 0 ? (
+				<p class="text-small text-ink-muted">No tags in use yet.</p>
+			) : (
+				<ul class="border-b border-rule-strong">
+					{listed.map((row, i) => (
+						<li
+							class:list={[
+								i === 0 ? 'border-t border-rule-strong' : 'border-t border-rule',
+							]}
+						>
+							<a
+								href={tagHref(row.key)}
+								class="group grid grid-cols-1 items-baseline gap-x-6 gap-y-1.5 py-4 no-underline md:grid-cols-[230px_1fr] lg:grid-cols-[230px_1fr_170px_110px]"
+							>
+								<h3 class="text-[1.1875rem] font-bold tracking-tight text-ink transition-colors group-hover:text-accent">
+									{TAGS[row.key].label}
+								</h3>
+
+								<p class="text-small leading-normal text-ink-muted">
+									{TAGS[row.key].description ??
+										[
+											row.posts > 0 &&
+												`${row.posts} ${row.posts === 1 ? 'note' : 'notes'}`,
+											row.projects > 0 &&
+												`${row.projects} ${row.projects === 1 ? 'project' : 'projects'}`,
+										]
+											.filter(Boolean)
+											.join(' · ')}
+								</p>
+
+								{/*
+									Relative weight, not a precise quantity — the count beside
+									it carries the number. Hidden below lg with the date, where
+									the row is only two columns wide.
+								*/}
+								<div class="hidden items-center gap-2.5 lg:flex">
+									<span
+										aria-hidden="true"
+										class:list={[
+											'h-1.5 shrink-0',
+											isDefault && i === 0 ? 'bg-accent' : 'bg-rule-strong',
+										]}
+										style={`width: ${barPercent(row.weight)}%`}
+									/>
+									<span class="text-mini text-ink-faint">{row.weight}</span>
+								</div>
+
+								<span class="hidden text-right text-mini text-ink-faint lg:block">
+									{row.latest ? stamp(row.latest) : '—'}
+								</span>
+							</a>
+						</li>
+					))}
+
+					{tail.length > 0 && (
+						<li
+							class:list={[
+								'grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-4 md:grid-cols-[230px_1fr]',
+								listed.length === 0
+									? 'border-t border-rule-strong'
+									: 'border-t border-rule',
+							]}
+						>
+							<span class="eyebrow">
+								{tail.length === 1
+									? 'One more, a single entry'
+									: `${tail.length} more, one entry each`}
+							</span>
+							<div class="flex flex-wrap gap-1.5">
+								{tail.map((row) => (
+									<a
+										href={tagHref(row.key)}
+										class="border border-rule px-2 py-1 text-micro tracking-wide text-ink-muted uppercase no-underline transition-colors hover:border-accent hover:text-accent"
+									>
+										{TAGS[row.key].label}
+									</a>
+								))}
+							</div>
+						</li>
+					)}
+				</ul>
+			)
+		}
+	</section>
+</BaseLayout>

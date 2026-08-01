@@ -8,6 +8,14 @@ const links = [
 ];
 
 const path = Astro.url.pathname;
+
+// Tag pages sit under Notes in the design's nav, so Notes takes the active
+// styling while browsing them — but only the exact URL gets aria-current,
+// which means "this is the page you're on", not "this is the section".
+// Index is exact-match only, or it would light up everywhere.
+const isSection = (href: string) =>
+	path === href ||
+	(href === '/blog/' && (path.startsWith('/blog/') || path.startsWith('/tags/')));
 ---
 
 <div
@@ -28,7 +36,10 @@ const path = Astro.url.pathname;
 				<a
 					href={link.href}
 					aria-current={path === link.href ? 'page' : undefined}
-					class="text-caption tracking-wider text-ink-muted uppercase no-underline transition-colors hover:text-ink aria-[current=page]:text-ink"
+					class:list={[
+						'text-caption tracking-wider uppercase no-underline transition-colors hover:text-ink',
+						isSection(link.href) ? 'text-ink' : 'text-ink-muted',
+					]}
 				>
 					{link.label}
 				</a>

@@ -1,0 +1,286 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { postsByTag, relatedTags } from '../../lib/posts';
+import { projectsByTag } from '../../lib/projects';
+import { TAGS, TAG_KEYS, tagHref, type TagKey } from '../../lib/tags';
+import { WEBSITE_ID } from '../../lib/schema';
+
+export const getStaticPaths: GetStaticPaths = async () =>
+	// Every tag in the registry gets a route, including ones nothing references
+	// yet. The index links only the used ones, so an empty page isn't reachable
+	// by browsing — but a hand-written link to it still resolves.
+	TAG_KEYS.map((key) => ({
+		params: { tag: TAGS[key].slug },
+		props: { tagKey: key },
+	}));
+
+const { tagKey } = Astro.props as { tagKey: TagKey };
+const tag = TAGS[tagKey];
+
+const posts = await postsByTag(tagKey);
+const projects = projectsByTag(tagKey);
+const related = await relatedTags(tagKey);
+const feedHref = `/tags/${tag.slug}/feed.xml`;
+
+// "7 notes · 2 projects" — each half only appears if it has something to say.
+const counts = [
+	posts.length > 0 && `${posts.length} ${posts.length === 1 ? 'note' : 'notes'}`,
+	projects.length > 0 &&
+		`${projects.length} ${projects.length === 1 ? 'project' : 'projects'}`,
+].filter(Boolean) as string[];
+
+const stamp = (date: Date) =>
+	date
+		.toLocaleDateString('en-GB', {
+			year: '2-digit',
+			month: '2-digit',
+			day: '2-digit',
+			timeZone: 'UTC',
+		})
+		.split('/')
+		.reverse()
+		.join('.');
+
+const url = new URL(Astro.url.pathname, Astro.site).href;
+
+// A CollectionPage rather than a plain WebPage: the tag's value is the list,
+// and the entries are what the page is actually about.
+const schema = {
+	'@type': 'CollectionPage',
+	'@id': `${url}#page`,
+	url,
+	name: tag.label,
+	...(tag.description && { description: tag.description }),
+	isPartOf: { '@id': WEBSITE_ID },
+	mainEntity: {
+		'@type': 'ItemList',
+		numberOfItems: posts.length,
+		itemListElement: posts.map((post, i) => ({
+			'@type': 'ListItem',
+			position: i + 1,
+			url: new URL(`/blog/${post.id}/`, Astro.site).href,
+			name: post.data.title,
+		})),
+	},
+};
+
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+---
+
+<BaseLayout
+	title={tag.label}
+	description={tag.description ?? `Everything tagged ${tag.label}.`}
+	image={`/og/tags/${tag.slug}.png`}
+	feed={posts.length > 0
+		? { href: feedHref, title: `Timothy Marias — ${tag.label}` }
+		: undefined}
+	schema={schema}
+>
+	{/* Breadcrumb — the only place the page states where it sits. */}
+	<nav
+		aria-label="Breadcrumb"
+		class="flex items-baseline gap-2.5 border-b border-rule px-6 py-5 text-mini tracking-wider uppercase md:px-18"
+	>
+		<a href="/blog/" class="text-ink-faint no-underline hover:text-ink">Notes</a>
+		<span class="text-ink-faint" aria-hidden="true">/</span>
+		<a href="/tags/" class="text-ink-faint no-underline hover:text-ink">Tags</a>
+		<span class="text-ink-faint" aria-hidden="true">/</span>
+		<span class="text-ink" aria-current="page">{tag.label}</span>
+	</nav>
+
+	<div
+		class="grid grid-cols-1 gap-x-8 gap-y-10 px-6 pt-14 pb-10 md:grid-cols-[96px_1fr] md:px-18 lg:grid-cols-[96px_1fr_300px]"
+	>
+		<span class="eyebrow pt-2.5">Tag</span>
+
+		<div>
+			<div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+				<h1
+					class="text-[2.25rem] leading-display font-bold tracking-tightest text-pretty sm:text-[2.875rem]"
+				>
+					{tag.label}
+				</h1>
+				{
+					counts.length > 0 && (
+						<p class="text-small text-ink-faint">{counts.join(' · ')}</p>
+					)
+				}
+			</div>
+			{
+				tag.description && (
+					<p class="mt-[18px] max-w-[480px] text-[0.9375rem] leading-normal text-ink-muted">
+						{tag.description}
+					</p>
+				)
+			}
+		</div>
+
+		<aside class="flex flex-col gap-3 lg:border-l lg:border-rule lg:pl-6">
+			{
+				related.length > 0 && (
+					<>
+						<span class="text-micro tracking-[0.1em] text-ink-faint uppercase">
+							Often with
+						</span>
+						<div class="flex flex-wrap gap-1.5">
+							{related.map((entry) => (
+								<a
+									href={tagHref(entry.key)}
+									class="border border-rule px-2 py-1 text-micro tracking-wide text-ink-muted uppercase no-underline transition-colors hover:border-accent hover:text-accent"
+								>
+									{TAGS[entry.key].label}{' '}
+									<span class="text-ink-faint">{entry.count}</span>
+								</a>
+							))}
+						</div>
+					</>
+				)
+			}
+
+			{/* Only worth offering once there is something to deliver. */}
+			{
+				posts.length > 0 && (
+					<p
+						class:list={[
+							'text-caption text-ink-faint',
+							related.length > 0 && 'mt-1.5 border-t border-rule pt-3',
+						]}
+					>
+						Subscribe to this tag{' '}
+						<a
+							href={feedHref}
+							class="border-b border-ink text-ink no-underline transition-colors hover:border-accent hover:text-accent"
+						>
+							RSS <span class="text-accent">&#8599;</span>
+						</a>
+					</p>
+				)
+			}
+		</aside>
+	</div>
+
+	{
+		projects.length > 0 && (
+			<section class="grid grid-cols-1 gap-x-8 px-6 pb-14 md:grid-cols-[96px_1fr] md:px-18">
+				<h2 class="eyebrow pb-4 md:pb-0">Projects</h2>
+				<ul class="border-b border-rule-strong">
+					{projects.map((project, i) => (
+						<li
+							class:list={[
+								'grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-4 sm:grid-cols-[40px_1fr_200px]',
+								i === 0
+									? 'border-t border-rule-strong'
+									: 'border-t border-rule',
+							]}
+						>
+							<span class="eyebrow font-mono">{project.index}</span>
+
+							<div>
+								<h3 class="text-[1.0625rem] font-bold tracking-tight text-ink">
+									{project.title}
+								</h3>
+								<p class="mt-[5px] max-w-[460px] text-small leading-normal text-ink-muted">
+									{project.summary}
+								</p>
+							</div>
+
+							<div class="flex flex-col gap-2.5 sm:items-end">
+								<span class="text-mini text-ink-faint">{project.year}</span>
+								{(project.links ?? []).length > 0 ? (
+									<div class="flex flex-wrap gap-3.5">
+										{project.links!.map((link) => (
+											<a
+												href={link.href}
+												target={isExternal(link.href) ? '_blank' : undefined}
+												rel={
+													isExternal(link.href)
+														? 'noopener noreferrer'
+														: undefined
+												}
+												class="flex items-baseline gap-[5px] border-b border-ink pb-[3px] text-micro tracking-wider text-ink uppercase no-underline transition-colors hover:border-accent hover:text-accent"
+											>
+												<span>{link.label}</span>
+												{isExternal(link.href) && (
+													<span class="text-accent">&#8599;</span>
+												)}
+											</a>
+										))}
+									</div>
+								) : (
+									<span class="text-micro tracking-wider text-ink-faint uppercase">
+										Private
+									</span>
+								)}
+							</div>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+
+	<section
+		class="grid grid-cols-1 gap-x-8 px-6 pb-16 md:grid-cols-[96px_1fr] md:px-18"
+	>
+		<h2 class="eyebrow pb-4 md:pb-0">Notes</h2>
+		{
+			posts.length === 0 ? (
+				<p class="text-small text-ink-muted">
+					Nothing written under this tag yet.
+				</p>
+			) : (
+				<ul class="border-b border-rule-strong">
+					{posts.map((post, i) => (
+						<li
+							class:list={[
+								i === 0 ? 'border-t border-rule-strong' : 'border-t border-rule',
+							]}
+						>
+							<a
+								href={`/blog/${post.id}/`}
+								class="group grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px] no-underline sm:grid-cols-[90px_1fr] lg:grid-cols-[90px_1fr_220px]"
+							>
+								<time
+									datetime={post.data.pubDate.toISOString()}
+									class="text-mini font-mono text-ink-faint"
+								>
+									{stamp(post.data.pubDate)}
+								</time>
+
+								<div>
+									<h3 class="text-[1.0625rem] font-bold tracking-tight text-ink transition-colors group-hover:text-accent">
+										{post.data.title}
+									</h3>
+									<p class="mt-[5px] max-w-[460px] text-small leading-normal text-ink-muted">
+										{post.data.description}
+									</p>
+								</div>
+
+								{/*
+									Chips inside the row's anchor, so they can't be links
+									themselves. The current tag is filled to show why the
+									post is in this list.
+								*/}
+								<div class="hidden flex-wrap gap-1.5 lg:flex">
+									{post.data.tags.map((key) => (
+										<span
+											class:list={[
+												'px-[7px] py-[3px] text-micro tracking-wide uppercase',
+												key === tagKey
+													? 'border border-rule-strong bg-rule-strong text-page'
+													: 'border border-rule text-ink-muted',
+											]}
+										>
+											{TAGS[key].label}
+										</span>
+									))}
+								</div>
+							</a>
+						</li>
+					))}
+				</ul>
+			)
+		}
+	</section>
+</BaseLayout>

@@ -1,20 +1,8 @@
 ---
-export interface ProjectLink {
-	/** Short label — "Repo", "Live", "Docs". */
-	label: string;
-	href: string;
-}
+import type { Project } from '../lib/projects';
+import { TAGS, tagHref } from '../lib/tags';
 
-interface Props {
-	index: string;
-	title: string;
-	summary: string;
-	/** Stack or domain. */
-	tags?: string[];
-	/** Single year, or a range for things with duration worth showing. */
-	year: string;
-	/** Zero or more destinations. Nothing linkable renders as "Private". */
-	links?: ProjectLink[];
+interface Props extends Project {
 	/** The first row carries the heavier rule, matching the design. */
 	first?: boolean;
 }
@@ -65,10 +53,13 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 	{/* Starts a fresh row under the title until the lg layout has a slot for it. */}
 	<div class="flex flex-wrap gap-1.5 sm:col-start-2 lg:col-start-auto">
 		{
-			tags.map((tag) => (
-				<span class="border border-rule px-[7px] py-[3px] text-micro tracking-wide text-ink-muted uppercase">
-					{tag}
-				</span>
+			tags.map((key) => (
+				<a
+					href={tagHref(key)}
+					class="border border-rule px-[7px] py-[3px] text-micro tracking-wide text-ink-muted uppercase no-underline transition-colors hover:border-accent hover:text-accent"
+				>
+					{TAGS[key].label}
+				</a>
 			))
 		}
 	</div>
