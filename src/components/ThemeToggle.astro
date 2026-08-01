@@ -1,11 +1,16 @@
 ---
 ---
 
+{/*
+	The toggle sits in the nav and shares its metrics exactly — the design
+	separates it by colour alone. `eyebrow` was setting a smaller size and its
+	own tracking, which is why it read as a different size.
+*/}
 <button
 	type="button"
 	data-theme-toggle
 	aria-label="Toggle color theme"
-	class="eyebrow cursor-pointer bg-transparent text-ink-muted transition-colors hover:text-ink"
+	class="cursor-pointer bg-transparent text-caption tracking-wider text-ink-faint uppercase transition-colors hover:text-ink"
 >
 	<span data-theme-label>Dark</span>
 </button>

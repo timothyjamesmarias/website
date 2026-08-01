@@ -37,8 +37,12 @@ const isSection = (href: string) =>
 					href={link.href}
 					aria-current={path === link.href ? 'page' : undefined}
 					class:list={[
-						'text-caption tracking-wider uppercase no-underline transition-colors hover:text-ink',
-						isSection(link.href) ? 'text-ink' : 'text-ink-muted',
+						'text-caption tracking-wider uppercase no-underline transition-colors',
+						// The accent marks where you are; hover is scoped to the
+						// others so it can't override it on the active link.
+						isSection(link.href)
+							? 'text-accent'
+							: 'text-ink-muted hover:text-ink',
 					]}
 				>
 					{link.label}
