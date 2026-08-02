@@ -1,11 +1,10 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import type { APIRoute } from 'astro';
+import { allPosts } from '../lib/posts';
+import { TAGS } from '../lib/tags';
 
 export const GET: APIRoute = async (context) => {
-	const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-	);
+	const posts = await allPosts();
 
 	return rss({
 		title: 'Timothy Marias',
@@ -17,7 +16,8 @@ export const GET: APIRoute = async (context) => {
 			description: post.data.description,
 			pubDate: post.data.pubDate,
 			link: `/blog/${post.id}/`,
-			categories: post.data.tags,
+			// Display labels, not internal keys — a reader shows these verbatim.
+			categories: post.data.tags.map((key) => TAGS[key].label),
 		})),
 		customData: '<language>en-us</language>',
 	});

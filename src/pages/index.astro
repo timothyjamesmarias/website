@@ -1,10 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import ProjectRow from '../components/ProjectRow.astro';
 import CopyEmail from '../components/CopyEmail.astro';
 import { PERSON_ID, WEBSITE_ID } from '../lib/schema';
+import { projects } from '../lib/projects';
+import { allPosts } from '../lib/posts';
 
 const status = [
 	{ label: 'Location', value: 'Oregon' },
@@ -12,42 +13,7 @@ const status = [
 	{ label: 'Building', value: 'Niche micromonopolies' },
 ];
 
-// Projects. Current work lives in the hero; the full history lives in the
-// résumé. `links` takes any mix of destinations — repo, live site, docs. Leave
-// it off when there is nothing public, and the row shows "Private" instead.
-const projects = [
-	{
-		index: '001',
-		title: 'Marias Family Archive',
-		summary:
-			"My WIP project to act as an archive for my family's genealogy from our primary sources." +
-			' Originally built out in Spring Boot with Kotlin, moving it now to Adonis JS. ' +
-			'SSR MPA with TS islands. Self hosted on my NixOS box.',
-		tags: ['Family Archive', 'Typescript', 'Postgres', 'NixOS'],
-		year: '2025—present',
-		links: [
-			{ label: 'Live', href: 'https://mariasfamilyarchive.com' },
-			{ label: 'Repo', href: 'https://github.com/timothyjamesmarias/familyArchive' },
-			{ label: 'Old', href: 'https://github.com/timothyjamesmarias/familyArchiveV1' }
-		],
-	},
-	{
-		index: '002',
-		title: 'Caelus',
-		summary: "A routing architecture library for being able to expose a program's API across multiple surfaces: keybindings and overrides, CLI, MCP, and web. " +
-			"Originally prototyped as a Kotlin Multiplatform Library, I'm in the process of porting this to TypeScript to be able to provide better web support.",
-		tags: ['Caelus', 'Typescript', 'Cross-platform'],
-		year: '2026—present',
-		links: [
-			{ label: 'Repo', href: 'https://github.com/ufo-soft/caelus' },
-			{ label: 'Old', href: 'https://github.com/ufo-soft/caelus-old' }
-		],
-	},
-];
-
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 4);
+const posts = (await allPosts()).slice(0, 4);
 
 const hasNotes = posts.length > 0;
 

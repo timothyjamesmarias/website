@@ -2,7 +2,7 @@
 title: 'Kitchen sink: every element a post might use'
 description: A styling reference covering the full range of markdown output, kept as a draft so it never ships.
 pubDate: 2026-07-26
-tags: ['Reference', 'Typography']
+tags: ['reference', 'typography']
 draft: true
 ---
 

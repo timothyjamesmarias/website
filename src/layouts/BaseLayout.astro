@@ -13,6 +13,10 @@ interface Props {
 	publishedTime?: Date;
 	modifiedTime?: Date;
 	image?: string;
+	/** A feed narrower than the site's — see SiteMeta. */
+	feed?: { href: string; title: string };
+	/** Index this page as another URL — see SiteMeta. */
+	canonical?: string;
 	/**
 	 * This page's own structured data node — a BlogPosting, a ProfilePage.
 	 * Merged into the site's identity graph rather than replacing it, so the

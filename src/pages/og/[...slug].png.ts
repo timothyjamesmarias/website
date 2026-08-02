@@ -1,6 +1,7 @@
 import type { APIRoute, GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { renderOgImage } from '../../lib/og.mjs';
+import { TAGS, TAG_KEYS } from '../../lib/tags';
 
 /**
  * Renders a 1200x630 card per page at build time. Uses the same headless
@@ -24,6 +25,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 			params: { slug: 'blog' },
 			props: { title: 'Notes', kicker: 'Writing' },
 		},
+		{
+			params: { slug: 'tags' },
+			props: { title: 'Tags', kicker: 'Index' },
+		},
+		...TAG_KEYS.map((key) => ({
+			params: { slug: `tags/${TAGS[key].slug}` },
+			props: { title: TAGS[key].label, kicker: 'Tag' },
+		})),
 		...posts.map((post) => ({
 			params: { slug: `blog/${post.id}` },
 			props: {

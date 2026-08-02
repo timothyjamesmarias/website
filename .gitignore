@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# The global gitignore excludes `TAGS` (the ctags/etags index). macOS is
+# case-insensitive, so that also swallows this route directory — un-ignore it.
+!src/pages/tags/
