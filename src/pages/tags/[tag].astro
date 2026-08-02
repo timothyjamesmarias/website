@@ -30,6 +30,26 @@ const counts = [
 		`${projects.length} ${projects.length === 1 ? 'project' : 'projects'}`,
 ].filter(Boolean) as string[];
 
+/*
+	Row chips are context — why this post is in this list, and what else it
+	touches — not a full index of its tags. The column is 220px, so past three
+	they stop informing and start crowding. The current tag leads, since it
+	answers the first question; the overflow is stated as plain text rather
+	than a control, because the row is already a link to the post, where the
+	complete set lives.
+*/
+const CHIP_LIMIT = 3;
+
+const rows = posts.map((post) => {
+	const ordered = [tagKey, ...post.data.tags.filter((key) => key !== tagKey)];
+	return {
+		post,
+		chips: ordered.slice(0, CHIP_LIMIT),
+		overflow: Math.max(0, ordered.length - CHIP_LIMIT),
+		minutes: readingMinutes(post),
+	};
+});
+
 const stamp = (date: Date) =>
 	date
 		.toLocaleDateString('en-GB', {
@@ -168,7 +188,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 				</p>
 			) : (
 				<ul class="border-b border-rule-strong">
-					{posts.map((post, i) => (
+					{rows.map(({ post, chips, overflow, minutes }, i) => (
 						<li
 							class:list={[
 								i === 0 ? 'border-t border-rule-strong' : 'border-t border-rule',
@@ -203,8 +223,8 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 								*/}
 								<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1.5 sm:col-start-2 lg:contents">
 									{/* Chips inside the anchor, so they can't be links. */}
-									<div class="flex flex-wrap gap-1.5">
-										{post.data.tags.map((key) => (
+									<div class="flex flex-wrap items-baseline gap-1.5">
+										{chips.map((key) => (
 											<span
 												class:list={[
 													'px-[7px] py-[3px] text-micro tracking-wide uppercase',
@@ -216,10 +236,13 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 												{TAGS[key].label}
 											</span>
 										))}
+										{overflow > 0 && (
+											<span class="text-micro text-ink-faint">+{overflow}</span>
+										)}
 									</div>
 
 									<span class="text-mini text-ink-faint lg:text-right">
-										{readingMinutes(post)} min
+										{minutes} min
 									</span>
 								</div>
 							</a>
