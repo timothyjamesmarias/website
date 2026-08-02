@@ -24,6 +24,30 @@ export const postsByTag = async (key: TagKey): Promise<Post[]> =>
 	(await allPosts()).filter((post) => post.data.tags.includes(key));
 
 /**
+ * Rounded minutes to read a post, from its markdown source.
+ *
+ * Fenced blocks come out first: a mermaid diagram or a long code listing is
+ * scanned, not read, and counting it as prose overstates a short post badly.
+ * Markup is stripped for the same reason — a URL is one token to a reader,
+ * not the eight "words" its punctuation splits into.
+ *
+ * 200 wpm is the conventional figure for technical prose. Never returns 0,
+ * since "0 min" reads as an error rather than as "short".
+ */
+export const readingMinutes = (post: Post): number => {
+	const prose = post.body
+		?.replace(/^---\n[\s\S]*?\n---/, '') // frontmatter, if the loader kept it
+		.replace(/```[\s\S]*?```/g, '') // fenced code and mermaid
+		.replace(/`[^`]*`/g, '') // inline code
+		.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1') // links and images, keep text
+		.replace(/^\s{0,3}[#>*+-]+\s*/gm, '') // list and heading markers
+		.replace(/[*_~]/g, ''); // emphasis
+
+	const words = prose?.split(/\s+/).filter(Boolean).length ?? 0;
+	return Math.max(1, Math.round(words / 200));
+};
+
+/**
  * Tags that appear alongside `key`, most frequent first — the "Often with"
  * rail. Counts projects as well as notes, since both carry tags and a
  * co-occurrence that only shows up in project metadata is still real.

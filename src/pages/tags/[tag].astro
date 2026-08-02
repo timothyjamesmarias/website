@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { postsByTag, relatedTags } from '../../lib/posts';
+import { postsByTag, readingMinutes, relatedTags } from '../../lib/posts';
 import { projectsByTag } from '../../lib/projects';
 import { TAGS, TAG_KEYS, tagHref, type TagKey } from '../../lib/tags';
 import { WEBSITE_ID } from '../../lib/schema';
@@ -176,7 +176,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 						>
 							<a
 								href={`/blog/${post.id}/`}
-								class="group grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px] no-underline sm:grid-cols-[90px_1fr] lg:grid-cols-[90px_1fr_220px]"
+								class="group grid grid-cols-1 items-baseline gap-x-6 gap-y-2 py-[18px] no-underline sm:grid-cols-[90px_1fr] lg:grid-cols-[90px_1fr_220px_80px]"
 							>
 								<time
 									datetime={post.data.pubDate.toISOString()}
@@ -195,23 +195,32 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 								</div>
 
 								{/*
-									Chips inside the row's anchor, so they can't be links
-									themselves. The current tag is filled to show why the
-									post is in this list.
+									Chips and read time share a line below lg, wrapping under
+									the title; at lg the wrapper dissolves (display: contents)
+									so each becomes its own grid column, as the design has it.
+									One copy of each either way — duplicating them per
+									breakpoint would have a screen reader announce them twice.
 								*/}
-								<div class="hidden flex-wrap gap-1.5 lg:flex">
-									{post.data.tags.map((key) => (
-										<span
-											class:list={[
-												'px-[7px] py-[3px] text-micro tracking-wide uppercase',
-												key === tagKey
-													? 'border border-rule-strong bg-rule-strong text-page'
-													: 'border border-rule text-ink-muted',
-											]}
-										>
-											{TAGS[key].label}
-										</span>
-									))}
+								<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1.5 sm:col-start-2 lg:contents">
+									{/* Chips inside the anchor, so they can't be links. */}
+									<div class="flex flex-wrap gap-1.5">
+										{post.data.tags.map((key) => (
+											<span
+												class:list={[
+													'px-[7px] py-[3px] text-micro tracking-wide uppercase',
+													key === tagKey
+														? 'border border-rule-strong bg-rule-strong text-page'
+														: 'border border-rule text-ink-muted',
+												]}
+											>
+												{TAGS[key].label}
+											</span>
+										))}
+									</div>
+
+									<span class="text-mini text-ink-faint lg:text-right">
+										{readingMinutes(post)} min
+									</span>
 								</div>
 							</a>
 						</li>
