@@ -72,9 +72,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 	title={tag.label}
 	description={tag.description ?? `Everything tagged ${tag.label}.`}
 	image={`/og/tags/${tag.slug}.png`}
-	feed={posts.length > 0
-		? { href: feedHref, title: `Timothy Marias — ${tag.label}` }
-		: undefined}
+	feed={{ href: feedHref, title: `Timothy Marias — ${tag.label}` }}
 	schema={schema}
 >
 	{/* Breadcrumb — the only place the page states where it sits. */}
@@ -138,25 +136,24 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 				)
 			}
 
-			{/* Only worth offering once there is something to deliver. */}
-			{
-				posts.length > 0 && (
-					<p
-						class:list={[
-							'text-caption text-ink-faint',
-							related.length > 0 && 'mt-1.5 border-t border-rule pt-3',
-						]}
-					>
-						Subscribe to this tag{' '}
-						<a
-							href={feedHref}
-							class="border-b border-ink text-ink no-underline transition-colors hover:border-accent hover:text-accent"
-						>
-							RSS <span class="text-accent">&#8599;</span>
-						</a>
-					</p>
-				)
-			}
+			{/*
+				Always offered. The feed route is built for every tag, so an early
+				subscription simply starts delivering once the tag has posts.
+			*/}
+			<p
+				class:list={[
+					'text-caption text-ink-faint',
+					related.length > 0 && 'mt-1.5 border-t border-rule pt-3',
+				]}
+			>
+				Subscribe to this tag{' '}
+				<a
+					href={feedHref}
+					class="border-b border-ink text-ink no-underline transition-colors hover:border-accent hover:text-accent"
+				>
+					RSS <span class="text-accent">&#8599;</span>
+				</a>
+			</p>
 		</aside>
 	</div>
 
