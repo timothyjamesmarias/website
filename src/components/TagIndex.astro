@@ -158,17 +158,19 @@ const schema = {
 			</p>
 		</div>
 
-		<aside class="flex flex-col gap-3 lg:border-l lg:border-rule lg:pl-6">
-			{/*
-				Three links, not a control that needs scripting — each ordering is
-				its own pre-built page. `aria-current` marks the active one for
-				assistive tech, since the fill alone only reads visually.
-			*/}
-			<nav aria-label="Sort order" class="flex flex-col gap-3">
-				<span class="text-micro tracking-[0.1em] text-ink-faint uppercase">
-					Sort
-				</span>
-				<div class="flex flex-wrap gap-1.5">
+		{/*
+			Three links, not a control that needs scripting — each ordering is
+			its own pre-built page. `aria-current` marks the active one for
+			assistive tech, since the fill alone only reads visually.
+		*/}
+		<nav
+			aria-label="Sort order"
+			class="flex flex-col gap-3 lg:border-l lg:border-rule lg:pl-6"
+		>
+			<span class="text-micro tracking-[0.1em] text-ink-faint uppercase">
+				Sort
+			</span>
+			<div class="flex flex-wrap gap-1.5">
 				{
 					TAG_SORTS.map((option) => {
 						const active = option.segment === segment;
@@ -184,27 +186,12 @@ const schema = {
 								]}
 							>
 								{option.label}
-								</a>
-							);
-						})
-					}
-				</div>
-			</nav>
-
-			{/*
-				The site feed, not a per-tag one — this page is every tag. Matches
-				the "Subscribe to this tag" affordance on the single-tag pages.
-			*/}
-			<p class="mt-1.5 border-t border-rule pt-3 text-caption text-ink-faint">
-				Subscribe to every note{' '}
-				<a
-					href="/feed.xml"
-					class="border-b border-ink text-ink no-underline transition-colors hover:border-accent hover:text-accent"
-				>
-					RSS <span class="text-accent">&#8599;</span>
-				</a>
-			</p>
-		</aside>
+							</a>
+						);
+					})
+				}
+			</div>
+		</nav>
 	</div>
 
 	<section
