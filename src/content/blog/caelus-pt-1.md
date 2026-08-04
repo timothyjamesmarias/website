@@ -9,43 +9,43 @@ draft: false
 ## Introduction
 
 One of the problems I keep having with modern software, especially modern SaaS, is that it doesn't let me do what I want to do with it.
-I use a very keyboard-heavy workflow for my daily computer usage. It's a godsend when a piece of commercial software deigns to provide any keymaps at all for working with its software.
+I use a very keyboard-heavy workflow for my daily computer usage. It's a godsend when a piece of commercial software deigns to provide any keymaps at all.
 However, what if I don't want to use their keymaps? Why can't I just have a file that sets my own, being able to map various commands to keybindings I prefer, like what every programmable editor provides?
 
-This problem got me thinking about any software I build, and what I want to provide for users. In my mind, good UX in software provides sane defaults for normal users, but high levels of extensibility for power users.
-A piece of software is just a tool; it is meant to extend the capabilities of the person using it.
-Users to be cordoned and funneled into the exact workflow you deem necessary for them. Imagine if MS Excel operated like a modern SaaS onboarding flow.
-If I'm building a tool, I want users to be able to use it the way they want to. It's really not that much work, either. If you build the capabilities for this, say, in a library, you can reuse it in other software!
-Profound, I know. But my business constraints! But my budget!
+This problem got me thinking about any software I build, and what I want to provide to users. In my mind, good UX in software provides sane defaults for normal users, but extensibility for power users.
+A piece of software is just a tool; it is meant to extend the capabilities of the user.
+Users are not to be cordoned and funneled into the exact workflow you deem necessary for them. Imagine if MS Excel operated like a modern SaaS onboarding flow.
+If I'm building a tool, I want the people I'm building it for to be able to use it the way they want. It's really not that much work, either.
 
-So then, what do you need for something like this? You need to know of course what operation the program is performing, and then you'd need a way to map that to a key listening layer.
-Let's say you have a program that has some operations like `openSearchMenu` and `createNewItem` and you want to map some keys to it. A place where you can put a list of things like `openSearchMenu` would be nice.
+So then, what do you need for something like this? You need to know what the program is doing, and then you'd need a way to map that to a key listening layer.
+Let's say you have a program that has some operations like `openSearchMenu` and `createNewItem` and you want to map some keys to it.
+A list of operations would be useful.
 
 ```
 "open search menu" -> openSearchMenu(),
 "create a new item" -> createNewItem(),
 ```
 
-Once you have that big list of operations registered somewhere, then you can attach another layer to it for your keys so that they keys point to the commands you want.
+Once you have that big list of operations registered somewhere, then you can add your key layer so the keypress is mapped the to the action.
 
 ```
 "cmd + k" -> openSearchMenu,
 "cmd + a" -> createNewItem,
 ```
 
-Then, you wire up your key maps to the key listening API for whatever platform you are writing on.
+Then, you wire up your key maps to the key listening API for whatever platform you are writing on, like the key listener for your browser.
 
-Something interesting you'll notice, though, is that if we have our big list of operations already set up in the program, then what's stopping us from exposing that as an API to other surfaces?
-As I mentioned before, we want to facilitate maximal user capabilities with our software. If we've got all of this stuff exposed, then what if we could build out other ways to work with our program?
+Something interesting you'll notice, though, is that if we have our big list of operations already set up in the program, what's stopping us from exposing that as an API to other surfaces?
+As I mentioned before, we want to facilitate maximal user capabilities. If we've got all of this stuff exposed like this, then what if we could build out some other ways to work with our program?
 Perhaps we could wire up the API to a command line interface library, or even better, what about an MCP server so that people can use agents to work with our program?
 If we already have everything organized, why can't we make something that builds all of that out for us?
 That brings us to this library, Caelus.
 
 ## What is Caelus?
 
-Caelus is a library for building out all these surfaces for an application. It's fundamentally a router at its core. What it allows for a developer to do is wire up their existing application's API to the library's command registry to then be able to construct a CLI, MCP API, and keymapping layer.
-Foundationally, Caelus provides a registry, a big list of commands, that a developer uses to hook up their API to the library.
-From there, the library provides some adapters to be able to construct and expose the aforementioned surface areas.
+Caelus is a library for building out all these surfaces for an application. It's a router at its core. What it allows for a developer to do is wire up their existing application's API to the library's command registry to then be able to construct a CLI, MCP API, and keymapping layer.
+Caelus provides a registry, a big list of commands, that a developer uses to hook up their API to the library.
+From there, the library provides some adapters to be able to construct and expose the operations to the aforementioned surface areas.
 It was made initially for desktop applications, but I'm in the process of extending this out to web apps as well as for communicating with back ends.
 I prototyped and validated the idea in [Kotlin](https://github.com/ufo-soft/caelus-old), but I've since decided to move it over to TypeScript. I asked Claude Code to port over the [core module](https://github.com/ufo-soft/caelus/blob/main/src/core.ts), and after sufficient amounts of bullying the machine, I think it did a pretty decent job at doing so.
 
@@ -97,7 +97,7 @@ class Parameter {
 ```
 
 That's all well and good, but what do we do now? We have a couple of things that represent what's present, but nothing's happening. Now, we need a place that actually contains the operation from the program.
-First, we need a place to actually put the thing that happens in the program, a place to *register* it, so we'll call the container a `Registration`.
+First, we need a place to actually put the thing that happens in the program, a place to *register* it, so we'll call this container a `Registration`.
 
 ```
 class Registration {
@@ -148,7 +148,8 @@ class Registration {
 }
 ```
 
-You'll notice the Registry is a map rather than a list, a map of a string and a Registration. This is so that we can assign a name to a Registration to be able to look it up, but that's getting ahead of ourselves.
+You'll notice the Registry is a map rather than a list, a map of a string and a Registration. 
+This is so that we can assign a name to a Registration to be able to look it up, but that's getting ahead of ourselves.
 The Registry allows for developers to set up what parts of their application gets routed to where.
 If a developer has something in their application that opens a search menu, like `openSearchMenu()`, they register it like so:
 
@@ -165,7 +166,8 @@ searchMenuReg = new Registration(
                     )
 ```
 
-All of this is pure pseudocode, slightly Kotlin flavored, but I hope it paints the picture. In this case, the command doesn't need a parameter because `openSearchMenu()` in this context doesn't require any arguments.
+All of this is pure pseudocode, slightly Kotlin flavored, but I hope it paints the picture. 
+In this case, the command doesn't need a parameter because `openSearchMenu()` in this context doesn't require any arguments.
 If this were different operation, you'd need to add in a parameter, but I'm too lazy to write that out right now, so you'll have to use your imagination.
 
 Finally, we build out the Registry and actually register operations:
@@ -232,8 +234,9 @@ If your software is made by some basement dwelling, chuddish freak, you know you
 
 ## Moving forward
 
-I'm in the midst of actually building this thing out properly. The project has been validated by its prototype, so I know it at least works a little bit. 
-It's going to be a TypeScript library first and foremost. Dirty, but it's hard to avoid. There's not much in the way of being ported to any other tech stack, however.
+I'm in the midst of actually building this thing out properly. The project has been validated by its prototype, so I know it at least works.
+It's going to be a TypeScript library first and foremost. Dirty, but it's hard to avoid. 
+There's not much in the way of being ported to any other tech stack, however.
 As of the time of writing this, I've only ported the core module over, but I'll most likely get to work building out the keybindings adapter, and surfacing that for web and React Native.
 This article was meant to serve as a general overview of the premise and general implementation.
 There is a ton of stuff I haven't covered in this article, especially around a lot of technical implementation details. There will be plenty to discuss in future articles.
