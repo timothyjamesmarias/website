@@ -50,6 +50,9 @@ export const TAGS = defineTags({
 
 	// Tech — languages, platforms, disciplines.
 	typescript: { label: 'TypeScript', slug: 'typescript', kind: 'tech' },
+	functionalProgramming: { label: 'Functional Programming', slug: 'functional-programming', kind: 'tech' },
+	rails: { label: 'Rails', slug: 'rails', kind: 'tech' },
+	ruby: { label: 'Ruby', slug: 'ruby', kind: 'tech' },
 	kotlin: { label: 'Kotlin', slug: 'kotlin', kind: 'tech' },
 	postgres: { label: 'Postgres', slug: 'postgres', kind: 'tech' },
 	nixos: { label: 'NixOS', slug: 'nixos', kind: 'tech' },
