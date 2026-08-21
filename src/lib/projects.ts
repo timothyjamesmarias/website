@@ -32,15 +32,15 @@ export const projects: Project[] = [
 		title: 'Marias Family Archive',
 		summary:
 			"My WIP project to act as an archive for my family's genealogy from our primary sources." +
-			' Originally built out in Spring Boot with Kotlin, moving it now to Adonis JS. ' +
-			'SSR MPA with TS islands. Self hosted on my NixOS box.',
-		tags: ['familyArchive', 'typescript', 'postgres', 'nixos'],
+			' Originally built out in Spring Boot with Kotlin, moving it now to Rails. ' +
+			'SSR MPA with TS islands.',
+		tags: ['familyArchive', 'rails', 'ruby', 'typescript', 'postgres'],
 		year: '2025—present',
 		links: [
 			{ label: 'Live', href: 'https://mariasfamilyarchive.com' },
 			{
 				label: 'Repo',
-				href: 'https://github.com/timothyjamesmarias/familyArchive',
+				href: 'https://github.com/timothyjamesmarias/family_archive',
 			},
 			{
 				label: 'Old',

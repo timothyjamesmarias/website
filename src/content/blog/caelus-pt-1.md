@@ -1,5 +1,5 @@
 ---
-title: 'Building Caelus Part 1'
+title: 'Building Caelus Part 1: Overview'
 description: The premise behind and a general overview of the Caelus cross-platform library.
 pubDate: 2026-08-03
 tags: ['caelus', 'typescript', 'kotlin']
