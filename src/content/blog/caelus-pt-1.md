@@ -230,7 +230,7 @@ What inspired me to choose this name is a handy piece of memory profiling softwa
 Electing to use a name from mythology harkens back to an older form of programming culture when people would name things based on obscure references, multi-layered jokes, or any other fun thing that came to the programmer's mind.
 Software projects now are given these soulless corpo-slop names that are either meant to be cute and/or futuristic, but inoffensive in both cases.
 I want any software I use written a sunlight-deprived Gollumesque troglodyte who makes dorky, esoteric references, not some normie making some Ultimate SaaS solution #582 called Boopify.
-If your software is made by some basement dwelling, chuddish freak, you know you are in good hands.
+If your software is made by a true basement dweller, you know you are in good hands.
 
 ## Moving forward
 
