@@ -1,5 +1,7 @@
 ---
 const year = new Date().getFullYear();
+const ring = 'https://ring.ufosoft.dev';
+const site = 'https://timothymarias.com';
 ---
 
 {/*
@@ -13,6 +15,11 @@ const year = new Date().getFullYear();
 	<span class="text-ink-muted">&copy; {year} Timothy Marias</span>
 
 	<span class="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+		<span class="flex items-baseline gap-2 text-ink-muted">
+			<a href={`${ring}/prev?from=${site}`} class="text-ink hover:text-accent" aria-label="Previous site in the ufosoft webring">&larr;</a>
+			<a href={ring} class="border-b border-ink pb-[2px] text-ink no-underline transition-colors hover:border-accent hover:text-accent">ufosoft webring</a>
+			<a href={`${ring}/next?from=${site}`} class="text-ink hover:text-accent" aria-label="Next site in the ufosoft webring">&rarr;</a>
+		</span>
 		<span class="text-ink-muted">Built with Astro</span>
 		<a
 			href="/feed.xml"
